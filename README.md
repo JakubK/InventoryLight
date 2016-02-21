@@ -1,4 +1,4 @@
-# Inventory-Professional
+# InventoryLight
 About
 This code is an effect of the Inventory System Extension for Unity3D.
 It will be very friendly for new Unity3D users, because you can control this system right from the Editor, you don't have to write 
