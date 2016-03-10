@@ -11,11 +11,16 @@ namespace Assets.Scripts.Items
         public string Description;
 
         public List<ItemProperty> ItemProperties;
-        public ItemCategory ItemCategory;
+        public ItemCategory itemCategory;
 
         public Item()
         {
+        }
 
+        public Item(string name,string description)
+        {
+            this.Name = name;
+            this.Description = description;
         }
     }
 }
