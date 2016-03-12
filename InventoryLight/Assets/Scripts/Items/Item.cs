@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Items
 {
+    [Serializable]
     public class Item
     {
         public int ID;
@@ -21,6 +23,19 @@ namespace Assets.Scripts.Items
         {
             this.Name = name;
             this.Description = description;
+        }
+
+        public delegate void ItemAction();
+
+        public event ItemAction OnUse;
+
+        public void Use()
+        {
+            if (OnUse != null)
+            {
+                Debug.Log("You have used the " + Name);
+                OnUse();
+            }
         }
     }
 }
