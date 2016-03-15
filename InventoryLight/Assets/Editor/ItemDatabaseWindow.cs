@@ -15,6 +15,7 @@ public class ItemDatabaseWindow : EditorWindow
     private int toolbarIndex = 0;
     private string[] toolbarStrings = new[] {"Items", "Item Properties & Categories", "Crafting"};
     public string[] CategoryStrings;
+    public string[] PropertyStrings;
 
     private Vector2 itemListVector = Vector2.zero;
     private Vector2 itemDataVector = Vector2.zero;
@@ -32,8 +33,6 @@ public class ItemDatabaseWindow : EditorWindow
 
     protected ItemCategory selectedCategory;
     protected ItemProperty propertyToDelete;
-
-    public ReorderableList PropertyReorderableList = null;
 
     public static void ShowWindow(ItemDatabase itemDatabase)
     {
@@ -67,6 +66,7 @@ public class ItemDatabaseWindow : EditorWindow
             GUILayout.EndHorizontal();
 
             //Items
+            EditorUtility.SetDirty(_database);
             if (toolbarIndex == 0)
             {
                 ReinitializeDatabase();
@@ -279,11 +279,13 @@ public class ItemDatabaseWindow : EditorWindow
             _database.ItemProperties.Remove(propertyToDelete);
             propertyToDelete = null;
         }
+        EditorUtility.SetDirty(_database);
     }
 
     void OnDisable()
     {
-        ReinitializeDatabase();
+      //  ReinitializeDatabase();
+        _serializedObject.Update();
         _serializedObject.ApplyModifiedPropertiesWithoutUndo();
     }
 
