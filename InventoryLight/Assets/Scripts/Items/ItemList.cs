@@ -25,13 +25,7 @@ namespace Assets.Scripts.Items
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                for (int i = 0; i < database.ItemCategories.Count; i++)
-                {
-                    print(database.ItemCategories[i].Category);
-                }
-            }
+
         }
     }
 }

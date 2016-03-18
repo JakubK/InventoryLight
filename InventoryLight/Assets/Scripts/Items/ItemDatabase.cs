@@ -51,5 +51,21 @@ namespace Assets.Scripts.Items
             }
             return result;
         }
+
+        public ItemProperty GetByNameProperty(string name)
+        {
+            ItemProperty property = new ItemProperty();
+            for (int i = 0; i < ItemProperties.Count; i++)
+            {
+                if (ItemProperties[i].PropertyName == name)
+                {
+                    property = ItemProperties[i];
+                    break;
+                }
+            }
+            return property;
+        }
+
+      
     }
 }

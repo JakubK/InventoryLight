@@ -8,8 +8,11 @@ namespace Assets.Scripts.Items
     [Serializable]
     public class ItemProperty
     {
+        
         public string PropertyName;
-        public object PropertyValue;
+        public string PropertyValue;
+
+        public int PropertyID;
 
         public ItemProperty()
         {
@@ -17,10 +20,24 @@ namespace Assets.Scripts.Items
             this.PropertyValue = string.Empty;
         }
 
-        public ItemProperty(string name, object value)
+        public ItemProperty(string name, string value)
         {
             this.PropertyName = name;
             this.PropertyValue = value;
+        }
+
+        public string GetExisting(string[] array)
+        {
+            string result = null;
+            for (int j = 0; j < array.Length; j++)
+            {
+                if (array[j] != this.PropertyName)
+                {
+                    result = array[j];
+                    break;
+                }
+            }
+            return result;
         }
     }
 }

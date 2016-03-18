@@ -13,7 +13,7 @@ public class ItemDatabaseWindow : EditorWindow
     private SerializedObject _serializedObject;
 
     private int toolbarIndex = 0;
-    private string[] toolbarStrings = new[] {"Items", "Item Properties & Categories", "Crafting"};
+    private string[] toolbarStrings = new[] { "Items", "Item Properties & Categories", "Crafting" };
     public string[] CategoryStrings;
     public string[] PropertyStrings;
 
@@ -34,6 +34,8 @@ public class ItemDatabaseWindow : EditorWindow
     protected ItemCategory selectedCategory;
     protected ItemProperty propertyToDelete;
 
+    public ReorderableList ItemPropertyList;
+
     public static void ShowWindow(ItemDatabase itemDatabase)
     {
         _database = itemDatabase;
@@ -43,23 +45,24 @@ public class ItemDatabaseWindow : EditorWindow
     void OnEnable()
     {
         ReinitializeDatabase();
+        ReinitializeProperties();
         _serializedObject = new SerializedObject(_database);
 
         ButtonStyle = new GUIStyle();
-        ButtonStyle.border = new RectOffset(6,6,6,4);
-        ButtonStyle.margin = new RectOffset(4,4,4,4);
-        ButtonStyle.padding = new RectOffset(6,6,3,3);
+        ButtonStyle.border = new RectOffset(6, 6, 6, 4);
+        ButtonStyle.margin = new RectOffset(4, 4, 4, 4);
+        ButtonStyle.padding = new RectOffset(6, 6, 3, 3);
     }
 
     void OnGUI()
     {
-        if(_serializedObject != null)
+        if (_serializedObject != null)
         {
             if (_database.ItemList == null)
             {
                 _database.ItemList = new List<Item>();
             }
-          
+
             GUILayout.Space(15);
             GUILayout.BeginHorizontal();
             toolbarIndex = GUILayout.Toolbar(toolbarIndex, toolbarStrings);
@@ -70,33 +73,82 @@ public class ItemDatabaseWindow : EditorWindow
             if (toolbarIndex == 0)
             {
                 ReinitializeDatabase();
+                ReinitializeProperties();
                 GUILayout.Space(20);
                 GUILayout.BeginHorizontal();
-                GUILayout.BeginVertical("Box",GUILayout.Width(350));
+                GUILayout.BeginVertical("Box", GUILayout.Width(350));
                 if (GUILayout.Button("Create New Item"))
                 {
-                    Item newItem = new Item("New Item " + _database.ItemList.Count.ToString(),"Sample Description");
+                    Item newItem = new Item("New Item " + _database.ItemList.Count.ToString(), "Sample Description");
                     EditedItem = newItem;
                     _database.ItemList.Add(newItem);
                     ReinitializeDatabase();
                 }
-                    GUILayout.BeginVertical("Box",GUILayout.Height(650));
+                GUILayout.BeginVertical("Box", GUILayout.Height(650));
 
-                    itemListVector = GUILayout.BeginScrollView(itemListVector, GUILayout.Height(650));
-                    foreach (Item item in _database.ItemList)
+                itemListVector = GUILayout.BeginScrollView(itemListVector, GUILayout.Height(650));
+                foreach (Item item in _database.ItemList)
+                {
+                    GUILayout.Space(5);
+                    if (GUILayout.Button(item.Name))
                     {
-                        GUILayout.Space(5);
-                        if (GUILayout.Button(item.Name))
-                        {
-                            EditedItem = item;
-                        }
+                        EditedItem = item;
                     }
-                    GUILayout.EndScrollView();
+                }
+                GUILayout.EndScrollView();
 
-                    GUILayout.EndVertical();
+                GUILayout.EndVertical();
                 GUILayout.EndVertical();
                 if (EditedItem != null)
                 {
+
+                        if (ItemPropertyList == null || !ItemPropertyList.list.Equals(EditedItem.ItemProperties))
+                        {
+                            if (_database.ItemList.Count > 0)
+                            {
+                                if (EditedItem.ItemProperties != null)
+                                {
+                                    ItemPropertyList = new ReorderableList(EditedItem.ItemProperties,
+                                        typeof (ItemProperty));
+
+                                    ItemPropertyList.drawElementCallback =
+                                        (Rect rect, int index, bool active, bool focused) =>
+                                        {
+                                            ItemProperty property = EditedItem.ItemProperties[index];
+                                            rect.y += 2;
+                                            property.PropertyID = EditorGUI.Popup(new Rect(rect.x + 25,rect.y,150,EditorGUIUtility.singleLineHeight), property.PropertyID,
+                                                PropertyStrings);
+
+                                            property.PropertyValue = EditorGUI.TextField(new Rect(rect.x + 250, rect.y, 150, EditorGUIUtility.singleLineHeight), property.PropertyValue);
+
+                                        };
+
+                                    ItemPropertyList.drawHeaderCallback = (Rect rect) =>
+                                    {
+                                        EditorGUI.LabelField(new Rect(rect.x + 25, rect.y, rect.width, rect.height),
+                                            "Name");
+                                        EditorGUI.LabelField(new Rect(rect.x + 250, rect.y, rect.width, rect.height),
+                                            "Value");
+                                    };
+
+                                    ItemPropertyList.onAddCallback = (ReorderableList l) =>
+                                    {
+                                        var index = EditedItem.ItemProperties.Count;
+                                        ItemProperty property = new ItemProperty();
+                                        EditedItem.ItemProperties.Add(property);
+
+                                        property = EditedItem.ItemProperties[index];
+
+                                        property.PropertyName = property.GetExisting(PropertyStrings);
+                                        property.PropertyValue =
+                                            _database.GetByNameProperty(property.PropertyName).PropertyValue;
+
+                                    };
+                                }
+                            }
+                        }
+                    
+
                     GUILayout.BeginVertical("Box", GUILayout.Height(650));
                     if (GUILayout.Button("Delete this Item"))
                     {
@@ -107,30 +159,30 @@ public class ItemDatabaseWindow : EditorWindow
 
                     GUILayout.BeginVertical("Box");
 
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("ID: ");
-                        GUILayout.Label(EditedItem.ID.ToString());
-                        GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("ID: ");
+                    GUILayout.Label(EditedItem.ID.ToString());
+                    GUILayout.EndHorizontal();
 
-                        GUILayout.Space(10);
+                    GUILayout.Space(10);
 
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Name");
-                        EditedItem.Name = GUILayout.TextField(EditedItem.Name,GUILayout.Width(460));
-                        GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Name");
+                    EditedItem.Name = GUILayout.TextField(EditedItem.Name, GUILayout.Width(460));
+                    GUILayout.EndHorizontal();
 
-                        GUILayout.Space(10);
+                    GUILayout.Space(10);
 
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Description");
-                        EditedItem.Description = GUILayout.TextArea(EditedItem.Description, GUILayout.Width(460));
-                        GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Description");
+                    EditedItem.Description = GUILayout.TextArea(EditedItem.Description, GUILayout.Width(460));
+                    GUILayout.EndHorizontal();
 
-                        GUILayout.Space(10);
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Max Stack's length");
-                        int.TryParse(GUILayout.TextField(EditedItem.MaxStackCount.ToString(),GUILayout.Width(460)), out EditedItem.MaxStackCount);
-                        GUILayout.EndHorizontal();
+                    GUILayout.Space(10);
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Max Stack's length");
+                    int.TryParse(GUILayout.TextField(EditedItem.MaxStackCount.ToString(), GUILayout.Width(460)), out EditedItem.MaxStackCount);
+                    GUILayout.EndHorizontal();
 
                     GUILayout.EndVertical();
 
@@ -138,14 +190,34 @@ public class ItemDatabaseWindow : EditorWindow
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Icon");
-                    EditedItem.Icon = (Sprite) EditorGUILayout.ObjectField(EditedItem.Icon, typeof (Sprite),GUILayout.Width(460));
+                    EditedItem.Icon = (Sprite)EditorGUILayout.ObjectField(EditedItem.Icon, typeof(Sprite), GUILayout.Width(460));
                     GUILayout.EndHorizontal();
+
+                    GUILayout.Space(10);
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Prefab");
                     EditedItem.ItemPrefab =
                         (GameObject)
                             EditorGUILayout.ObjectField(EditedItem.ItemPrefab, typeof(GameObject), GUILayout.Width(460));
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.Space(10);
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("On Use AudioClip");
+                    EditedItem.OnUseAudioClip =
+                        (AudioClip)
+                            EditorGUILayout.ObjectField(EditedItem.OnUseAudioClip, typeof(AudioClip),
+                                GUILayout.Width(460));
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("On Gear AudioClip");
+                    EditedItem.OnGearAudioClip =
+                        (AudioClip)
+                            EditorGUILayout.ObjectField(EditedItem.OnGearAudioClip, typeof(AudioClip),
+                                GUILayout.Width(460));
                     GUILayout.EndHorizontal();
 
                     GUILayout.Space(10);
@@ -161,8 +233,13 @@ public class ItemDatabaseWindow : EditorWindow
 
                     GUILayout.Space(10);
 
-                    GUILayout.BeginVertical();
+                    GUILayout.BeginVertical("Box");
                     //ReorderableListHere
+                    GUILayout.Label("Item Properties");
+                    EditorUtility.SetDirty(_database);
+                    ItemPropertyList.DoLayoutList();
+                    EditorUtility.SetDirty(_database);
+
                     GUILayout.EndVertical();
 
                     GUILayout.EndScrollView();
@@ -174,6 +251,7 @@ public class ItemDatabaseWindow : EditorWindow
             else if (toolbarIndex == 1) //ItemCategories & Properties
             {
                 ReinitializeDatabase();
+                ReinitializeProperties();
                 GUILayout.Space(20);
                 GUILayout.BeginHorizontal();
 
@@ -201,7 +279,7 @@ public class ItemDatabaseWindow : EditorWindow
                     }
                     GUILayout.EndVertical();
                     GUILayout.EndScrollView();
-                  }
+                }
                 GUILayout.Space(20);
                 GUILayout.BeginVertical("Box");
                 if (GUILayout.Button("Remove"))
@@ -238,7 +316,7 @@ public class ItemDatabaseWindow : EditorWindow
                         GUILayout.Label("Default Value:");
                         property.PropertyValue = GUILayout.TextField(property.PropertyValue.ToString(), GUILayout.Width(450));
                         GUILayout.EndHorizontal();
-                        if(GUILayout.Button("Remove"))
+                        if (GUILayout.Button("Remove"))
                         {
                             propertyToDelete = property;
                         }
@@ -246,7 +324,7 @@ public class ItemDatabaseWindow : EditorWindow
                     GUILayout.EndVertical();
                     GUILayout.EndScrollView();
                 }
-                                
+
                 GUILayout.EndVertical();
                 GUILayout.EndHorizontal();
             }
@@ -256,23 +334,23 @@ public class ItemDatabaseWindow : EditorWindow
         }
         if (ItemToDelete != null)
         {
-                if (ItemToDelete.ID != 0)
-                {
-                    EditedItem = _database.ItemList[ItemToDelete.ID - 1];
-                }
-                else if (_database.ItemList.Count == 1)
-                {
-                    EditedItem = null;
-                }
-                else
-                {
-                    EditedItem = _database.ItemList[ItemToDelete.ID + 1];
-                }
+            if (ItemToDelete.ID != 0)
+            {
+                EditedItem = _database.ItemList[ItemToDelete.ID - 1];
+            }
+            else if (_database.ItemList.Count == 1)
+            {
+                EditedItem = null;
+            }
+            else
+            {
+                EditedItem = _database.ItemList[ItemToDelete.ID + 1];
+            }
 
-                _database.ItemList.Remove(ItemToDelete);
+            _database.ItemList.Remove(ItemToDelete);
 
-                ItemToDelete = null;
-                ReinitializeDatabase(); 
+            ItemToDelete = null;
+            ReinitializeDatabase();
         }
         if (propertyToDelete != null)
         {
@@ -284,7 +362,7 @@ public class ItemDatabaseWindow : EditorWindow
 
     void OnDisable()
     {
-      //  ReinitializeDatabase();
+        //  ReinitializeDatabase();
         _serializedObject.Update();
         _serializedObject.ApplyModifiedPropertiesWithoutUndo();
     }
@@ -301,5 +379,16 @@ public class ItemDatabaseWindow : EditorWindow
             CategoryStrings[j] = _database.ItemCategories[j].Category;
         }
     }
+
+    private void ReinitializeProperties()
+    {
+        PropertyStrings = new string[_database.ItemProperties.Count];
+        for (int i = 0; i < _database.ItemProperties.Count; i++)
+        {
+            _database.ItemProperties[i].PropertyID = i;
+            PropertyStrings[i] = _database.ItemProperties[i].PropertyName;
+        }
+    }
 }
+
 

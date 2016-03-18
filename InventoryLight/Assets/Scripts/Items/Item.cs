@@ -15,6 +15,9 @@ namespace Assets.Scripts.Items
         public Sprite Icon;
         public GameObject ItemPrefab;
 
+        public AudioClip OnGearAudioClip;
+        public AudioClip OnUseAudioClip;
+
         public List<ItemProperty> ItemProperties;
         public ItemCategory itemCategory;
 
@@ -32,6 +35,9 @@ namespace Assets.Scripts.Items
             this.Description = description;
             this.MaxStackCount = 1;
             this.categoryChoiceID = 0;
+
+            ItemProperties = new List<ItemProperty>();
+            itemCategory = new ItemCategory();
         }
 
         public delegate void ItemAction();
