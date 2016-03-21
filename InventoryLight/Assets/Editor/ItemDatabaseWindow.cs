@@ -101,7 +101,6 @@ public class ItemDatabaseWindow : EditorWindow
                 GUILayout.EndVertical();
                 if (EditedItem != null)
                 {
-
                         if (ItemPropertyList == null || !ItemPropertyList.list.Equals(EditedItem.ItemProperties))
                         {
                             if (_database.ItemList.Count > 0)
@@ -120,7 +119,7 @@ public class ItemDatabaseWindow : EditorWindow
                                                 PropertyStrings);
 
                                             property.PropertyValue = EditorGUI.TextField(new Rect(rect.x + 250, rect.y, 150, EditorGUIUtility.singleLineHeight), property.PropertyValue);
-
+                                            property.PropertyName = _database.PropertyName(property.PropertyID);
                                         };
 
                                     ItemPropertyList.drawHeaderCallback = (Rect rect) =>
@@ -147,8 +146,6 @@ public class ItemDatabaseWindow : EditorWindow
                                 }
                             }
                         }
-                    
-
                     GUILayout.BeginVertical("Box", GUILayout.Height(650));
                     if (GUILayout.Button("Delete this Item"))
                     {
