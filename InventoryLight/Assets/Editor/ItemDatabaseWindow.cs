@@ -13,7 +13,7 @@ public class ItemDatabaseWindow : EditorWindow
     private SerializedObject _serializedObject;
 
     private int toolbarIndex = 0;
-    private string[] toolbarStrings = new[] { "Items", "Item Properties & Categories", "Crafting" };
+    private string[] toolbarStrings = new[] { "Items", "Item Properties & Categories", "Crafting","Clear Properties" };
     public string[] CategoryStrings;
     public string[] PropertyStrings;
 
@@ -115,11 +115,10 @@ public class ItemDatabaseWindow : EditorWindow
                                         {
                                             ItemProperty property = EditedItem.ItemProperties[index];
                                             rect.y += 2;
-                                            property.PropertyID = EditorGUI.Popup(new Rect(rect.x + 25,rect.y,150,EditorGUIUtility.singleLineHeight), property.PropertyID,
-                                                PropertyStrings);
 
+                                                EditorGUI.LabelField(
+                                                    new Rect(rect.x + 25, rect.y, 150, EditorGUIUtility.singleLineHeight),property.PropertyName);
                                             property.PropertyValue = EditorGUI.TextField(new Rect(rect.x + 250, rect.y, 150, EditorGUIUtility.singleLineHeight), property.PropertyValue);
-                                            property.PropertyName = _database.PropertyName(property.PropertyID);
                                         };
 
                                     ItemPropertyList.drawHeaderCallback = (Rect rect) =>
@@ -130,18 +129,33 @@ public class ItemDatabaseWindow : EditorWindow
                                             "Value");
                                     };
 
-                                    ItemPropertyList.onAddCallback = (ReorderableList l) =>
+                                    //ItemPropertyList.onAddCallback = (ReorderableList l) =>
+                                    //{
+                                    //    var index = EditedItem.ItemProperties.Count;
+                                    //    ItemProperty property = new ItemProperty();
+                                    //    EditedItem.ItemProperties.Add(property);
+
+                                    //    property = EditedItem.ItemProperties[index];
+
+                                    //    property.PropertyName = property.GetExisting(PropertyStrings);
+                                    //    property.PropertyValue =
+                                    //        _database.GetByNameProperty(property.PropertyName).PropertyValue;
+
+                                    //};
+
+                                    ItemPropertyList.onAddDropdownCallback = (Rect rect, ReorderableList list) =>
                                     {
-                                        var index = EditedItem.ItemProperties.Count;
-                                        ItemProperty property = new ItemProperty();
-                                        EditedItem.ItemProperties.Add(property);
+                                        var menu = new GenericMenu();
 
-                                        property = EditedItem.ItemProperties[index];
+                                        for (int i = 0; i < _database.ItemProperties.Count; i++)
+                                        {
+                                            if (!EditedItem.ItemProperties.Contains(_database.ItemProperties[i]))
+                                            {
+                                                menu.AddItem(new GUIContent(_database.ItemProperties[i].PropertyName), false, AddProperty, _database.GetByNameProperty(_database.ItemProperties[i].PropertyName));
+                                            }
+                                        }
 
-                                        property.PropertyName = property.GetExisting(PropertyStrings);
-                                        property.PropertyValue =
-                                            _database.GetByNameProperty(property.PropertyName).PropertyValue;
-
+                                        menu.ShowAsContext();
                                     };
                                 }
                             }
@@ -315,6 +329,13 @@ public class ItemDatabaseWindow : EditorWindow
                         GUILayout.EndHorizontal();
                         if (GUILayout.Button("Remove"))
                         {
+                            foreach (Item i in _database.ItemList)
+                            {
+                                if (i.ItemProperties.Contains(property))
+                                {
+                                    i.ItemProperties.Remove(property);
+                                }
+                            }
                             propertyToDelete = property;
                         }
                     }
@@ -324,6 +345,17 @@ public class ItemDatabaseWindow : EditorWindow
 
                 GUILayout.EndVertical();
                 GUILayout.EndHorizontal();
+            }
+            else if (toolbarIndex == 2)
+            {
+                
+            }
+            else if (toolbarIndex == 3)
+            {
+                foreach (Item i in _database.ItemList )
+                {
+                    i.ItemProperties.Clear();
+                }
             }
 
             _serializedObject.Update();
@@ -357,6 +389,16 @@ public class ItemDatabaseWindow : EditorWindow
         EditorUtility.SetDirty(_database);
     }
 
+    private void AddProperty(object userData)
+    {
+        var data = (ItemProperty) userData;
+        ItemProperty property = data;
+        EditedItem.ItemProperties.Add(property);
+        var index = EditedItem.ItemProperties.Count;
+
+        //property = EditedItem.ItemProperties[index];
+    }
+
     void OnDisable()
     {
         //  ReinitializeDatabase();
@@ -382,10 +424,10 @@ public class ItemDatabaseWindow : EditorWindow
         PropertyStrings = new string[_database.ItemProperties.Count];
         for (int i = 0; i < _database.ItemProperties.Count; i++)
         {
-            _database.ItemProperties[i].PropertyID = i;
             PropertyStrings[i] = _database.ItemProperties[i].PropertyName;
         }
     }
+
 }
 
 

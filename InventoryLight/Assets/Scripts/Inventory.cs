@@ -52,6 +52,13 @@ public class Inventory : MonoBehaviour {
         {
             RemoveItem(1);
         }
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
+            foreach (ItemProperty property in ItemDatabase.ItemList[0].ItemProperties)
+            {
+                print(property.PropertyName);
+            }
+        }
         
 	}
 

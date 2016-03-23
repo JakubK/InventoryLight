@@ -66,20 +66,6 @@ namespace Assets.Scripts.Items
             return property;
         }
 
-        public string PropertyName(int ID)
-        {
-            string result = null;
-            for (int i = 0; i < ItemProperties.Count; i++)
-            {
-                if (ItemProperties[i].PropertyID == ID)
-                {
-                    result = ItemProperties[i].PropertyName;
-                    break;
-                }
-            }
-            return result;
-        }
-
         public Item ItemByID(int ID)
         {
             Item result = null;

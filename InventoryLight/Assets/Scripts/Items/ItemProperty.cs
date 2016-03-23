@@ -12,8 +12,6 @@ namespace Assets.Scripts.Items
         public string PropertyName;
         public string PropertyValue;
 
-        public int PropertyID;
-
         public ItemProperty()
         {
             this.PropertyName = string.Empty;
