@@ -54,12 +54,8 @@ public class Inventory : MonoBehaviour {
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {
-            foreach (ItemProperty property in ItemDatabase.ItemList[0].ItemProperties)
-            {
-                print(property.PropertyName);
-            }
+            AddItem(2);
         }
-        
 	}
 
     private void FillWithSlots()
@@ -78,6 +74,9 @@ public class Inventory : MonoBehaviour {
            {
                GameObject slotInstance = Instantiate(slotPrefab).gameObject;
                slotInstance.name = "Slot";
+
+               Slot slot = slotInstance.AddComponent<Slot>();
+               slot.ID = i;
 
                SlotList.Add(slotInstance.transform);
                slotInstance.transform.SetParent(slotPanel.transform);
@@ -148,6 +147,7 @@ public class Inventory : MonoBehaviour {
                 ItemList.Add(itemData);
                 itemData.HoldedItem = ItemDatabase.ItemByID(ID);
                 itemData.Amount = 1;
+                itemData.Slot = i;
 
                 itemInstance.GetComponent<Image>().sprite = itemData.HoldedItem.Icon;
 
