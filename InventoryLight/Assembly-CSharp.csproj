@@ -45,14 +45,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Inventory.cs" />
-     <Compile Include="Assets\Scripts\ItemData.cs" />
      <Compile Include="Assets\Scripts\Items\Item.cs" />
      <Compile Include="Assets\Scripts\Items\ItemCategory.cs" />
      <Compile Include="Assets\Scripts\Items\ItemDatabase.cs" />
      <Compile Include="Assets\Scripts\Items\ItemList.cs" />
      <Compile Include="Assets\Scripts\Items\ItemProperty.cs" />
-     <Compile Include="Assets\Scripts\Slot.cs" />
+     <Compile Include="Assets\Scripts\Serialization\ItemCollectionSerializer.cs" />
+     <Compile Include="Assets\Scripts\Serialization\ItemDataParams.cs" />
+     <Compile Include="Assets\Scripts\Serialization\SaveType.cs" />
+     <Compile Include="Assets\Scripts\UI\DragHandler.cs" />
+     <Compile Include="Assets\Scripts\UI\Inventory.cs" />
+     <Compile Include="Assets\Scripts\UI\ItemData.cs" />
+     <Compile Include="Assets\Scripts\UI\Slot.cs" />
+     <Compile Include="Assets\Scripts\UI\Tooltip.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

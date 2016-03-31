@@ -1,0 +1,104 @@
+﻿using System;
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using Assets.Scripts.Items;
+using UnityEngine.EventSystems;
+
+namespace Assets.Scripts.UI
+{
+    [Serializable]
+    public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler
+    {
+        public Item HoldedItem;
+        public int Amount;
+        public int Slot;
+
+        public List<ItemProperty> Properties;
+        private Inventory inv;
+
+        [HideInInspector] public Vector3 startPosition;
+
+        [HideInInspector] public Transform startParent;
+
+        void Start()
+        {
+            inv = transform.parent.parent.parent.GetComponent<Inventory>();
+
+            Properties = new List<ItemProperty>();
+            foreach (ItemProperty property in HoldedItem.ItemProperties)
+            {
+                Properties.Add(new ItemProperty(property.PropertyName, property.PropertyValue));
+            }
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            if (inv.DragAndDropEnabled)
+            {
+                if (HoldedItem != null)
+                {
+                    startPosition = transform.GetComponent<RectTransform>().anchoredPosition3D;
+                    startParent = transform.parent;
+                    this.transform.SetParent(transform.parent.parent);
+                    this.transform.position = eventData.position;
+
+                    GetComponent<CanvasGroup>().blocksRaycasts = false;
+                }
+            }
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            if (inv.DragAndDropEnabled)
+            {
+                if (HoldedItem != null)
+                {
+                    this.transform.position = eventData.position;
+                }
+            }
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            if (inv.DragAndDropEnabled)
+            {
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+                transform.GetComponent<RectTransform>().anchoredPosition3D = startPosition;
+
+                bool foundParent = false;
+                for (int i = 0; i < inv.SlotList.Count; i++)
+                {
+                    if (transform.parent == inv.SlotList[i])
+                    {
+                        foundParent = true;
+                    }
+                }
+                if (foundParent == false)
+                {
+                    transform.SetParent(startParent);
+                    transform.GetComponent<RectTransform>().anchoredPosition3D = startPosition;
+                }
+            }
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.clickCount == inv.OnUseClickCount)
+            {
+                this.HoldedItem.Use();
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            inv.Tooltip.gameObject.SetActive(true);
+            inv.Tooltip.GetComponent<Tooltip>().Call(HoldedItem);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            inv.Tooltip.gameObject.SetActive(false);
+        }
+    }
+ }

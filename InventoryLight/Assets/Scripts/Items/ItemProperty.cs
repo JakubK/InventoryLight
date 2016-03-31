@@ -6,7 +6,7 @@ using System.Text;
 namespace Assets.Scripts.Items
 {
     [Serializable]
-    public class ItemProperty
+    public class ItemProperty : ICloneable
     {
         
         public string PropertyName;
@@ -38,5 +38,10 @@ namespace Assets.Scripts.Items
             return result;
         }
 
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

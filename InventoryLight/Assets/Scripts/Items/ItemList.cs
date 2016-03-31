@@ -21,6 +21,11 @@ namespace Assets.Scripts.Items
             {
                Items[i].ID = i;      
             }
+
+            database.ItemList[0].OnUse += () =>
+            {
+                print("You have used the " + database.ItemList[0].Name);
+            };
         }
 
         void Update()

@@ -93,6 +93,8 @@ public class ItemDatabaseWindow : EditorWindow
                     if (GUILayout.Button(item.Name))
                     {
                         EditedItem = item;
+                        EditorGUI.FocusTextInControl(null);
+                       
                     }
                 }
                 GUILayout.EndScrollView();
@@ -392,11 +394,12 @@ public class ItemDatabaseWindow : EditorWindow
     private void AddProperty(object userData)
     {
         var data = (ItemProperty) userData;
-        ItemProperty property = data;
+        ItemProperty property = (ItemProperty)data.Clone();
+
+        property = new ItemProperty(property.PropertyName,property.PropertyValue);
+
         EditedItem.ItemProperties.Add(property);
         var index = EditedItem.ItemProperties.Count;
-
-        //property = EditedItem.ItemProperties[index];
     }
 
     void OnDisable()

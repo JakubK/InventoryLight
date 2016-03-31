@@ -79,5 +79,19 @@ namespace Assets.Scripts.Items
             }
             return result;
         }
+
+        public Item ItemByName(string Name)
+        {
+            Item result = null;
+            for (int i = 0; i < ItemList.Count; i++)
+            {
+                if (ItemList[i].Name == Name)
+                {
+                    result = ItemList[i];
+                    break;
+                }
+            }
+            return result;
+        }
     }
 }

@@ -48,7 +48,6 @@ namespace Assets.Scripts.Items
         {
             if (OnUse != null)
             {
-                Debug.Log("You have used the " + Name);
                 OnUse();
             }
         }
