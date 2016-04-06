@@ -9,7 +9,6 @@ using Assets.Scripts.UI;
 public class ItemCollectionSerializer
 {
     private List<ItemDataParams> Params; 
-    private string SavePath;
 
     public ItemCollectionSerializer(List<ItemData> DataToSave)
     {
@@ -44,7 +43,7 @@ public class ItemCollectionSerializer
         List<ItemDataParams> IDS = new List<ItemDataParams>();
         BinaryFormatter formatter = new BinaryFormatter();
 
-        using (var stream = new FileStream(Path + ".icf",FileMode.Open))
+        using (var stream = new FileStream(Path + ".icf", FileMode.Open))
         {
             IDS = (List<ItemDataParams>) formatter.Deserialize(stream);
         }

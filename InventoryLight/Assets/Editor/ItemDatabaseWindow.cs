@@ -13,7 +13,7 @@ public class ItemDatabaseWindow : EditorWindow
     private SerializedObject _serializedObject;
 
     private int toolbarIndex = 0;
-    private string[] toolbarStrings = new[] { "Items", "Item Properties & Categories", "Crafting","Clear Properties" };
+    private string[] toolbarStrings = new[] { "Items", "Item Properties & Categories", "Crafting" };
     public string[] CategoryStrings;
     public string[] PropertyStrings;
 
@@ -352,13 +352,6 @@ public class ItemDatabaseWindow : EditorWindow
             {
                 
             }
-            else if (toolbarIndex == 3)
-            {
-                foreach (Item i in _database.ItemList )
-                {
-                    i.ItemProperties.Clear();
-                }
-            }
 
             _serializedObject.Update();
             _serializedObject.ApplyModifiedProperties();
@@ -432,5 +425,3 @@ public class ItemDatabaseWindow : EditorWindow
     }
 
 }
-
-

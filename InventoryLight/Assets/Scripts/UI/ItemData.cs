@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Items;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
@@ -15,7 +16,8 @@ namespace Assets.Scripts.UI
         public int Slot;
 
         public List<ItemProperty> Properties;
-        private Inventory inv;
+        [HideInInspector]
+        public Inventory inv;
 
         [HideInInspector] public Vector3 startPosition;
 
@@ -87,6 +89,19 @@ namespace Assets.Scripts.UI
             if (eventData.clickCount == inv.OnUseClickCount)
             {
                 this.HoldedItem.Use();
+                this.Amount--;
+                if (Amount > 1)
+                {
+                    transform.GetChild(0).GetComponent<Text>().text = Amount.ToString();
+                }
+                else if (Amount == 1)
+                {
+                    transform.GetChild(0).GetComponent<Text>().text = "";
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
 

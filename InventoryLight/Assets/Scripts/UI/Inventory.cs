@@ -10,7 +10,6 @@ namespace Assets.Scripts.UI
 {
     public class Inventory : MonoBehaviour
     {
-        // Use this for initialization
         public ItemDatabase ItemDatabase;
 
         [SerializeField] private Transform slotPanel;
@@ -20,6 +19,12 @@ namespace Assets.Scripts.UI
         [SerializeField] private Transform itemPrefab;
 
         [SerializeField] private int MaxSize;
+
+        [SerializeField]
+        private string ContainerPath;
+
+        [SerializeField]
+        private bool SaveOnClose;
 
         public Transform Tooltip;
 
@@ -31,31 +36,22 @@ namespace Assets.Scripts.UI
 
         public int OnUseClickCount;
 
-        [SerializeField] private string SavePath = @"";
-
         void Start()
         {
             SlotList = new List<Transform>();
             ItemList = new List<ItemData>();
             FillWithSlots();
-            if (!string.IsNullOrEmpty(SavePath))
+            RestoreLastSession();
+        }
+
+        void OnApplicationQuit()
+        {
+            if (SaveOnClose)
             {
-                SavePath.Insert(SavePath.Length-1,".icf");
-                if (File.Exists(SavePath))
-                {
-                    ItemCollectionSerializer ICS = new ItemCollectionSerializer();
-                    paramses = ICS.Load(SavePath);
-                    print(paramses[0].Amount);
-                }
-                else
-                {
-                    print("NO");
-                    print(SavePath);
-                }
+                SaveSession();
             }
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.A))
@@ -70,15 +66,55 @@ namespace Assets.Scripts.UI
             {
                 AddItem(1);
             }
-            else if (Input.GetKeyDown(KeyCode.F))
+            else if (Input.GetKeyDown(KeyCode.L))
             {
-                ItemCollectionSerializer ICS = new ItemCollectionSerializer(ItemList);
-                ICS.Save(@"D:\Data");
+                ClearInventory();
             }
-            else if (Input.GetKeyDown(KeyCode.G))
+        }
+
+        public void SaveSession()
+        {
+            ItemCollectionSerializer ics = new ItemCollectionSerializer(ItemList);
+            ics.Save(ContainerPath);
+        }
+
+        public void ClearInventory()
+        {
+            ItemList.Clear();
+            foreach (Transform t in SlotList)
             {
-                ItemCollectionSerializer ICS = new ItemCollectionSerializer();
-                ICS.Load(@"D:\Data");
+                foreach (Transform i in t)
+                {
+                    Destroy(i.gameObject);
+                }
+            }
+        }
+
+        public void RestoreLastSession()
+        {
+            ItemCollectionSerializer ics = new ItemCollectionSerializer();
+            paramses = ics.Load(ContainerPath);
+            ItemList.Clear();
+            foreach (Transform t in SlotList)
+            {
+                foreach (Transform i in t)
+                {
+                    Destroy(i.gameObject);
+                }
+            }
+
+            foreach (ItemDataParams i in paramses)
+            {
+                AddItem(i.ID, i.Amount,i.slotID);
+            }
+          
+        }
+
+        void OnDisable()
+        {
+            if (SaveOnClose)
+            {
+                SaveSession();
             }
         }
 
@@ -98,7 +134,7 @@ namespace Assets.Scripts.UI
                 {
                     GameObject slotInstance = Instantiate(slotPrefab).gameObject;
                     slotInstance.name = "Slot";
-
+                    
                     Slot slot = slotInstance.GetComponent<Slot>();
                     slot.ID = i;
 
@@ -152,6 +188,28 @@ namespace Assets.Scripts.UI
                     }
                 }
             }
+        }
+
+        public void AddItem(int ID, int Amount,int Slot)
+        {
+            GameObject itemInstance = Instantiate(itemPrefab).gameObject;
+            itemInstance.name = "Item";
+
+            itemInstance.transform.SetParent(SlotList[Slot].transform);
+            itemInstance.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+            ItemData itemData = itemInstance.AddComponent<ItemData>();
+            ItemList.Add(itemData);
+            itemData.HoldedItem = ItemDatabase.ItemByID(ID);
+            itemData.Amount = Amount;
+            itemData.Slot = Slot;
+
+            itemInstance.GetComponent<Image>().sprite = itemData.HoldedItem.Icon;
+            if (Amount > 1)
+            {
+                itemInstance.transform.GetChild(0).GetComponent<Text>().text = Amount.ToString();
+            }
+
         }
 
         public void AddItem(int ID)
