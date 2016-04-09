@@ -14,6 +14,7 @@ namespace Assets.Scripts.UI
         public Item HoldedItem;
         public int Amount;
         public int Slot;
+        public string Name;
 
         public List<ItemProperty> Properties;
         [HideInInspector]

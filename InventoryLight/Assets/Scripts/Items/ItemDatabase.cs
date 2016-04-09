@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Deployment.Internal;
+using Assets.Scripts.Crafting;
 
 namespace Assets.Scripts.Items
 {
@@ -15,6 +16,9 @@ namespace Assets.Scripts.Items
 
         [HideInInspector]
         public List<ItemCategory> ItemCategories = new List<ItemCategory>();
+
+        [HideInInspector]
+        public List<Recipe> Recipes = new List<Recipe>();
 
         public bool CategoryExist(string name)
         {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Items;
 using UnityEditor;
 using UnityEditorInternal;
+using Assets.Scripts.Crafting;
 
 public class ItemDatabaseWindow : EditorWindow
 {
@@ -13,7 +14,9 @@ public class ItemDatabaseWindow : EditorWindow
     private SerializedObject _serializedObject;
 
     private int toolbarIndex = 0;
+    private int craftToolbarIndex = 0;
     private string[] toolbarStrings = new[] { "Items", "Item Properties & Categories", "Crafting" };
+    private string[] craftToolbarStrings = new[] {"Recipes", "BluePrints" };
     public string[] CategoryStrings;
     public string[] PropertyStrings;
 
@@ -26,10 +29,14 @@ public class ItemDatabaseWindow : EditorWindow
     protected Item EditedItem;
     protected Item ItemToDelete;
 
+    protected Recipe EditedRecipe;
+    protected Recipe RecipeToRemove;
+
     private GUIStyle ButtonStyle;
 
     private string newItemCategory = "";
     private string newItemProperty = "";
+    private string newRecipe = "";
 
     protected ItemCategory selectedCategory;
     protected ItemProperty propertyToDelete;
@@ -350,11 +357,117 @@ public class ItemDatabaseWindow : EditorWindow
             }
             else if (toolbarIndex == 2)
             {
+                GUILayout.BeginHorizontal();
+                //EditorUtility.SetDirty(_database);
+                //GUILayout.BeginVertical("box");
+
+
+                //if(GUILayout.Button("New Recipe"))
+                //{
+                //    _database.Recipes.Add(new Recipe());
+                //}
+                //foreach (Recipe rec in _database.Recipes)
+                //{
+                //    GUILayout.Space(15);
+                //  int.TryParse(GUILayout.TextField(rec.OutputID.ToString()), out rec.OutputID);
+                //  if (GUILayout.Button("Remove Recipe"))
+                //  {
+                //      if (RecipeToRemove == null)
+                //      {
+                //          RecipeToRemove = rec;
+                //      }
+                //  }
+                //}
+
                 
+                //GUILayout.EndVertical();
+                //GUILayout.BeginVertical("box");
+
+                //GUILayout.EndVertical();
+                //EditorUtility.SetDirty(_database);
+                craftToolbarIndex = GUILayout.Toolbar(craftToolbarIndex, craftToolbarStrings);
+                GUILayout.EndHorizontal();
+             
+                if (craftToolbarIndex == 0) //Recipes
+                {
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.BeginVertical("box",GUILayout.Width(250)); //list
+                    GUILayout.BeginHorizontal();
+                    newRecipe = GUILayout.TextField(newRecipe.ToString(), GUILayout.Width(150));
+                    if (GUILayout.Button("Create Recipe"))
+                    {
+                        if(int.Parse(newRecipe) <= _database.ItemList.Count-1)
+                        {
+                            bool foundDuplicate = false;
+                            for (int i = 0; i < _database.Recipes.Count; i++)
+                            {
+                                if (_database.Recipes[i].OutputID == int.Parse(newRecipe))
+                                {
+                                    foundDuplicate = true;
+                                }
+                            }
+                            if (!foundDuplicate)
+                            {
+                                _database.Recipes.Add(new Recipe(int.Parse(newRecipe)));
+                            }
+                        }
+                    }
+                    GUILayout.EndHorizontal();
+                    foreach (Recipe rec in _database.Recipes)
+                    {
+                        if (GUILayout.Button(_database.ItemByID(rec.OutputID).Name.ToString()))
+                        {
+                            EditedRecipe = rec;
+                        }
+                    }
+
+                    GUILayout.EndVertical();
+                    if (EditedRecipe != null)
+                    {
+                        GUILayout.BeginVertical("box");
+
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label("Result Item");
+                        GUILayout.Label(_database.ItemByID(EditedRecipe.OutputID).Name.ToString());
+                        GUILayout.EndHorizontal();
+
+                        GUILayout.Label("Ingredients");
+
+                        if (GUILayout.Button("New Ingredient"))
+                        {
+                            EditedRecipe.RequiredData.Add(_database.ItemByID(0));
+                        }
+                        foreach (Item i in EditedRecipe.RequiredData)
+                        {
+                            GUILayout.Space(10);
+                            GUILayout.BeginHorizontal();
+
+                            GUILayout.Label("Ingredient ID");
+                            int.TryParse(GUILayout.TextField(i.ID.ToString()), out i.ID);
+
+                            GUILayout.EndHorizontal();
+                        }
+
+                        GUILayout.EndVertical();
+                    }
+                    GUILayout.EndHorizontal();
+                }
+                else if (craftToolbarIndex == 1)
+                {
+                    
+                }
+               
+              
             }
 
             _serializedObject.Update();
             _serializedObject.ApplyModifiedProperties();
+        }
+        if (RecipeToRemove != null)
+        {
+            _database.Recipes.Remove(RecipeToRemove);
+            RecipeToRemove = null;
         }
         if (ItemToDelete != null)
         {
