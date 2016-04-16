@@ -20,6 +20,8 @@ namespace Assets.Scripts.Items
         [HideInInspector]
         public List<Recipe> Recipes = new List<Recipe>();
 
+        public List<BluePrint> BluePrints = new List<BluePrint>();
+
         public bool CategoryExist(string name)
         {
             bool result = false;

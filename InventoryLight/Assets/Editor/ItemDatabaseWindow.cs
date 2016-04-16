@@ -28,15 +28,20 @@ public class ItemDatabaseWindow : EditorWindow
 
     protected Item EditedItem;
     protected Item ItemToDelete;
+    protected Item CraftDataToRemove;
 
     protected Recipe EditedRecipe;
     protected Recipe RecipeToRemove;
+
+    protected BluePrint EditedBluePrint;
+    protected BluePrint BluePrintToRemove;
 
     private GUIStyle ButtonStyle;
 
     private string newItemCategory = "";
     private string newItemProperty = "";
     private string newRecipe = "";
+    private string newBluePrint = "";
 
     protected ItemCategory selectedCategory;
     protected ItemProperty propertyToDelete;
@@ -74,7 +79,7 @@ public class ItemDatabaseWindow : EditorWindow
             GUILayout.BeginHorizontal();
             toolbarIndex = GUILayout.Toolbar(toolbarIndex, toolbarStrings);
             GUILayout.EndHorizontal();
-
+           
             //Items
             EditorUtility.SetDirty(_database);
             if (toolbarIndex == 0)
@@ -438,31 +443,111 @@ public class ItemDatabaseWindow : EditorWindow
                         {
                             EditedRecipe.RequiredData.Add(_database.ItemByID(0));
                         }
-                        foreach (Item i in EditedRecipe.RequiredData)
+                        if (EditedRecipe.RequiredData != null)
                         {
-                            GUILayout.Space(10);
-                            GUILayout.BeginHorizontal();
+                            foreach (Item i in EditedRecipe.RequiredData)
+                            {
+                                GUILayout.Space(10);
+                                GUILayout.BeginHorizontal();
+                                if (GUILayout.Button("Remove"))
+                                {
+                                    CraftDataToRemove = i;
+                                }
+                                GUILayout.Label("Ingredient ID");
+                                int.TryParse(GUILayout.TextField(i.ID.ToString()), out i.ID);
 
-                            GUILayout.Label("Ingredient ID");
-                            int.TryParse(GUILayout.TextField(i.ID.ToString()), out i.ID);
-
-                            GUILayout.EndHorizontal();
+                                GUILayout.EndHorizontal();
+                            }
                         }
 
                         GUILayout.EndVertical();
                     }
                     GUILayout.EndHorizontal();
                 }
-                else if (craftToolbarIndex == 1)
+                else if (craftToolbarIndex == 1) //BluePrints
                 {
-                    
+                    GUILayout.BeginHorizontal();
+                    GUILayout.BeginVertical("box", GUILayout.Width(250)); //list
+                    GUILayout.BeginHorizontal();
+                    newBluePrint = GUILayout.TextField(newBluePrint.ToString(), GUILayout.Width(150));
+                    EditorUtility.SetDirty(_database);
+                    if (GUILayout.Button("Create BluePrint"))
+                    {
+                        if (int.Parse(newBluePrint) <= _database.ItemList.Count - 1)
+                        {
+                            bool foundDuplicate = false;
+                            for (int i = 0; i < _database.BluePrints.Count; i++)
+                            {
+                                if (_database.BluePrints[i].OutputID == int.Parse(newBluePrint))
+                                {
+                                    foundDuplicate = true;
+                                }
+                            }
+                            if (!foundDuplicate)
+                            {
+                                _database.BluePrints.Add(new BluePrint(int.Parse(newBluePrint)));
+                            }
+                        }
+                    }
+                    GUILayout.EndHorizontal();
+                    foreach (BluePrint bp in _database.BluePrints)
+                    {
+                        if (GUILayout.Button(_database.ItemByID(bp.OutputID).Name.ToString()))
+                        {
+                            EditedBluePrint = bp;
+                        }
+                    }
+
+                    GUILayout.EndVertical();
+                    if (EditedBluePrint!= null)
+                    {
+                        GUILayout.BeginVertical("box", GUILayout.Width(200));
+                        GUILayout.BeginHorizontal();
+                      //  GUILayout.Label("BluePrint for: " + _database.ItemByID(EditedRecipe.OutputID).Name.ToString());
+                        GUILayout.EndHorizontal();
+
+                            GUILayout.BeginVertical();
+
+                            GUILayout.BeginHorizontal();
+                            EditedBluePrint.x1y1 = GUILayout.TextField(EditedBluePrint.x1y1.ToString(),GUILayout.Width(40));
+                            EditedBluePrint.x1y2 = GUILayout.TextField(EditedBluePrint.x1y2.ToString(), GUILayout.Width(40));
+                            EditedBluePrint.x1y3 = GUILayout.TextField(EditedBluePrint.x1y3.ToString(), GUILayout.Width(40));
+                            GUILayout.EndHorizontal();
+
+                            GUILayout.BeginHorizontal();
+                            EditedBluePrint.x2y1 = GUILayout.TextField(EditedBluePrint.x2y1.ToString(), GUILayout.Width(40));
+                            EditedBluePrint.x2y2 = GUILayout.TextField(EditedBluePrint.x2y2.ToString(), GUILayout.Width(40));
+                            EditedBluePrint.x2y3 = GUILayout.TextField(EditedBluePrint.x2y3.ToString(), GUILayout.Width(40));
+                            GUILayout.EndHorizontal();
+
+                            GUILayout.BeginHorizontal();
+                            EditedBluePrint.x3y1 = GUILayout.TextField(EditedBluePrint.x3y1.ToString(), GUILayout.Width(40));
+                            EditedBluePrint.x3y2 = GUILayout.TextField(EditedBluePrint.x3y2.ToString(), GUILayout.Width(40));
+                            EditedBluePrint.x3y3 = GUILayout.TextField(EditedBluePrint.x3y3.ToString(), GUILayout.Width(40));
+                            GUILayout.EndHorizontal();
+
+                            GUILayout.EndVertical();
+                        
+                        
+                        GUILayout.EndVertical();
+                      
+                    }
+                    GUILayout.EndHorizontal();
                 }
-               
-              
             }
 
             _serializedObject.Update();
             _serializedObject.ApplyModifiedProperties();
+        }
+        if (BluePrintToRemove != null)
+        {
+            _database.BluePrints.Remove(BluePrintToRemove);
+            BluePrintToRemove = null;
+        }
+        if (CraftDataToRemove != null)
+        {
+            EditedRecipe.RequiredData.Remove(CraftDataToRemove);
+            CraftDataToRemove = null;
         }
         if (RecipeToRemove != null)
         {

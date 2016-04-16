@@ -30,7 +30,10 @@ namespace Assets.Scripts.Items
 
         void Update()
         {
-
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                 print(database.BluePrints[0].x1y2);          
+            }
         }
     }
 }
