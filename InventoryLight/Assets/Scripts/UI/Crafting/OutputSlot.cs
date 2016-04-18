@@ -16,13 +16,5 @@ namespace Assets.Scripts.UI.Crafting
         {
 
         }
-
-        public void Call()
-        {
-            for (int i = 0; i < _database.Recipes.Count; i++)
-            {
-
-            }
-        }
     }
 }

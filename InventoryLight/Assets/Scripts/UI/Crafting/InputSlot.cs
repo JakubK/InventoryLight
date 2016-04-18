@@ -10,11 +10,11 @@ namespace Assets.Scripts.UI.Crafting
     public class InputSlot : MonoBehaviour,IDropHandler
     {
         public ItemData data;
-        OutputSlot output;
+        CraftingManager cm;
 
         void Start()
         {
-
+            cm = transform.parent.parent.GetComponent<CraftingManager>();
         }
 
         public void OnDrop(PointerEventData eventData)
@@ -28,9 +28,8 @@ namespace Assets.Scripts.UI.Crafting
                     droppedItemData.inv.ItemList.Remove(droppedItemData);
                     data = droppedItemData;
 
-                    output.Call();
+                    cm.Call();      
                 }
-            
         }
     }
 }

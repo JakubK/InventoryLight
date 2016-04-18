@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Items\ItemProperty.cs" />
      <Compile Include="Assets\Scripts\Serialization\ItemCollectionSerializer.cs" />
      <Compile Include="Assets\Scripts\Serialization\ItemDataParams.cs" />
+     <Compile Include="Assets\Scripts\UI\Crafting\CraftingManager.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\InputSlot.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\OutputSlot.cs" />
      <Compile Include="Assets\Scripts\UI\DragHandler.cs" />
