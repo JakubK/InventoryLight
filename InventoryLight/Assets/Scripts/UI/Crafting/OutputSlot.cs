@@ -6,8 +6,7 @@ using System.Text;
 using UnityEngine;
 <<<<<<< HEAD
 using UnityEngine.UI;
-=======
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
+
 
 namespace Assets.Scripts.UI.Crafting
 {
@@ -18,7 +17,6 @@ namespace Assets.Scripts.UI.Crafting
 
         void Start()
         {
-<<<<<<< HEAD
             _database = transform.parent.GetComponent<CraftingManager>().database;
         }
 
@@ -33,9 +31,6 @@ namespace Assets.Scripts.UI.Crafting
             ItemData id = itemInstance.AddComponent<ItemData>();
             id.HoldedItem = _database.ItemByID(outputID);
             id.GetComponent<Image>().sprite = id.HoldedItem.Icon;
-=======
-
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
         }
     }
 }
