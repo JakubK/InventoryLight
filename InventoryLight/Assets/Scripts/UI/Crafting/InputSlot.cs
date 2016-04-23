@@ -19,11 +19,8 @@ namespace Assets.Scripts.UI.Crafting
 
         public void OnDrop(PointerEventData eventData)
         {
-<<<<<<< HEAD
             try
             {
-=======
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
                 if (data == null)
                 {
                     ItemData droppedItemData = eventData.pointerDrag.GetComponent<ItemData>();
@@ -39,9 +36,15 @@ namespace Assets.Scripts.UI.Crafting
             catch (Exception ex)
             {
 
+<<<<<<< HEAD
             }                  cm.Call();      
                 
         }
+=======
+            }
+                    cm.Call();      
+                }
+>>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
         }
     }
 
