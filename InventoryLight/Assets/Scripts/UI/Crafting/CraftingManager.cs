@@ -16,35 +16,28 @@ namespace Assets.Scripts.UI.Crafting
         public ItemDatabase database;
 
         [SerializeField]
-<<<<<<< HEAD
         Transform slotPrefab;
 
         public Transform itemPrefab;
-=======
         Transform itemPrefab;
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
 
 
         void Start()
         {
-<<<<<<< HEAD
             input = new InputSlot[3, 3];
 
             if (Output)
             {
                 if (Output.GetComponent<OutputSlot>())
-=======
             input = new InputSlot[3,3];
 
             if(Output)
             {
                 if(Output.GetComponent<OutputSlot>())
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
                 {
                     output = Output.GetComponent<OutputSlot>();
                 }
             }
-<<<<<<< HEAD
             if (InputContainer)
             {
                 int i = 0;
@@ -63,7 +56,6 @@ namespace Assets.Scripts.UI.Crafting
                     }
                 }
 
-=======
             if(InputContainer)
             {
                     int i = 0;
@@ -86,7 +78,6 @@ namespace Assets.Scripts.UI.Crafting
                         }
                     }
                 
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
             }
 
         }
@@ -95,11 +86,9 @@ namespace Assets.Scripts.UI.Crafting
         {
             for (int i = 0; i < database.BluePrints.Count; i++)
             {
-<<<<<<< HEAD
                 string[,] bluePrint = new string[3, 3];
-=======
+
                 string[,] bluePrint = new string[3,3];
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
 
                 bluePrint[0, 0] = database.BluePrints[i].x1y1;
                 bluePrint[1, 0] = database.BluePrints[i].x2y1;
@@ -114,11 +103,9 @@ namespace Assets.Scripts.UI.Crafting
                 bluePrint[2, 2] = database.BluePrints[i].x3y3;
 
                 int points = 0;
-<<<<<<< HEAD
 
-=======
                 
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
+
                 for (int y = 0; y < 3; y++)
                 {
                     for (int x = 0; x < 3; x++)
@@ -133,18 +120,16 @@ namespace Assets.Scripts.UI.Crafting
                 if (points == 9)
                 {
                     print("RESULT");
-<<<<<<< HEAD
+
                     print("The output blueprint is " + database.BluePrints[i].OutputID);
 
                     output.Call(database.BluePrints[i].OutputID);
-=======
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
+
                 }
             }
         }
     }
-<<<<<<< HEAD
 }
-=======
+
 }
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
+
