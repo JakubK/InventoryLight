@@ -40,3 +40,24 @@ E:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Un
 E:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 E:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\obj\Debug\Assembly-CSharp.dll
 E:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\obj\Debug\Assembly-CSharp.pdb
+I:\IL\InventoryLight\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+I:\IL\InventoryLight\obj\Debug\Assembly-CSharp.dll
+I:\IL\InventoryLight\obj\Debug\Assembly-CSharp.pdb
+I:\IL\InventoryLight\Temp\bin\Debug\Assembly-CSharp.dll
+I:\IL\InventoryLight\Temp\bin\Debug\Assembly-CSharp.pdb
+I:\IL\InventoryLight\Temp\bin\Debug\UnityEditor.dll
+I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.dll
+I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.Networking.dll
+I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.UI.dll
+I:\IL\InventoryLight\Temp\bin\Debug\Mono.Cecil.dll
+I:\IL\InventoryLight\Temp\bin\Debug\Unity.SerializationLogic.dll
+I:\IL\InventoryLight\Temp\bin\Debug\Unity.DataContract.dll
+I:\IL\InventoryLight\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+I:\IL\InventoryLight\Temp\bin\Debug\Unity.UNetWeaver.dll
+I:\IL\InventoryLight\Temp\bin\Debug\Unity.CecilTools.dll
+I:\IL\InventoryLight\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+I:\IL\InventoryLight\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.xml
+I:\IL\InventoryLight\Temp\bin\Debug\UnityEditor.xml
+I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.UI.xml
+I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.Networking.xml

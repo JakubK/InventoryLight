@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.UI
@@ -26,23 +27,30 @@ namespace Assets.Scripts.UI
 
         public void OnDrop(PointerEventData eventData)
         {
-            if (inv.DragAndDropEnabled)
+            try
             {
-                ItemData droppedItemData = eventData.pointerDrag.GetComponent<ItemData>();
-                if (inv.SlotList[ID].childCount == 0)
+                if (inv.DragAndDropEnabled)
                 {
-                    droppedItemData.transform.SetParent(transform);
-                    droppedItemData.GetComponent<RectTransform>().anchoredPosition3D = droppedItemData.startPosition;
-                    droppedItemData.startParent = transform;
-                    droppedItemData.Slot = ID;
-                    droppedItemData.inv.ItemList.Remove(droppedItemData);
-                    inv.ItemList.Add(droppedItemData);
-                    item = droppedItemData;
-                    if (Gearable)
+                    ItemData droppedItemData = eventData.pointerDrag.GetComponent<ItemData>();
+                    if (inv.SlotList[ID].childCount == 0)
                     {
-                        droppedItemData.HoldedItem.Gear();
+                        droppedItemData.transform.SetParent(transform);
+                        droppedItemData.GetComponent<RectTransform>().anchoredPosition3D = droppedItemData.startPosition;
+                        droppedItemData.startParent = transform;
+                        droppedItemData.Slot = ID;
+                        droppedItemData.inv.ItemList.Remove(droppedItemData);
+                        inv.ItemList.Add(droppedItemData);
+                        item = droppedItemData;
+                        if (Gearable)
+                        {
+                            droppedItemData.HoldedItem.Gear();
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

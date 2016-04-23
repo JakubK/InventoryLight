@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+
 using UnityEngine.UI;
 
 
@@ -30,6 +31,7 @@ namespace Assets.Scripts.UI.Crafting
             ItemData id = itemInstance.AddComponent<ItemData>();
             id.HoldedItem = _database.ItemByID(outputID);
             id.GetComponent<Image>().sprite = id.HoldedItem.Icon;
+
         }
     }
 }

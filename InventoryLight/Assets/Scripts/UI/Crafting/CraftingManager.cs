@@ -16,121 +16,57 @@ namespace Assets.Scripts.UI.Crafting
         public ItemDatabase database;
 
         [SerializeField]
-<<<<<<< HEAD
-
         Transform slotPrefab;
 
         public Transform itemPrefab;
-
-        Transform itemPrefab;
-
-=======
-        Transform slotPrefab;
-
-        public Transform itemPrefab;
-        Transform itemPrefab;
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
-
 
         void Start()
         {
-<<<<<<< HEAD
 
-=======
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
             input = new InputSlot[3, 3];
 
             if (Output)
             {
                 if (Output.GetComponent<OutputSlot>())
-<<<<<<< HEAD
 
-=======
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
-            input = new InputSlot[3,3];
+                    input = new InputSlot[3, 3];
 
-            if(Output)
-            {
-                if(Output.GetComponent<OutputSlot>())
-<<<<<<< HEAD
-
-=======
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
+                if (Output)
                 {
-                    output = Output.GetComponent<OutputSlot>();
-                }
-            }
-<<<<<<< HEAD
-
-=======
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
-            if (InputContainer)
-            {
-                int i = 0;
-                for (int y = 0; y < 3; y++)
-                {
-                    for (int x = 0; x < 3; x++)
+                    if (Output.GetComponent<OutputSlot>())
                     {
-                        GameObject slotInstance = Instantiate(slotPrefab.gameObject);
-                        slotInstance.transform.SetParent(InputContainer);
-                        slotInstance.transform.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
-
-                        slotInstance.GetComponent<RectTransform>().sizeDelta = slotPrefab.GetComponent<RectTransform>().sizeDelta;
-
-                        input[x, y] = InputContainer.GetChild(i).GetComponent<InputSlot>();
-                        i++;
+                        output = Output.GetComponent<OutputSlot>();
                     }
                 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
-            if(InputContainer)
-            {
+                if (InputContainer)
+                {
                     int i = 0;
-                    for(int y = 0;y < 3;y++)
+                    for (int y = 0; y < 3; y++)
                     {
-                        for(int x = 0;x < 3;x++)
+                        for (int x = 0; x < 3; x++)
                         {
-                            GameObject itemInstance = Instantiate(itemPrefab.gameObject);
-                            itemInstance.transform.SetParent(InputContainer);
-                            itemInstance.transform.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
+                            GameObject slotInstance = Instantiate(slotPrefab.gameObject);
+                            slotInstance.transform.SetParent(InputContainer);
+                            slotInstance.transform.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
 
-                            itemInstance.GetComponent<RectTransform>().sizeDelta = itemPrefab.GetComponent<RectTransform>().sizeDelta;
-
-                            input[x, y] = itemInstance.AddComponent<InputSlot>();
+                            slotInstance.GetComponent<RectTransform>().sizeDelta = slotPrefab.GetComponent<RectTransform>().sizeDelta;
 
                             input[x, y] = InputContainer.GetChild(i).GetComponent<InputSlot>();
                             i++;
-
-
                         }
                     }
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
+                }
             }
-
         }
 
         public void Call()
         {
             for (int i = 0; i < database.BluePrints.Count; i++)
             {
-<<<<<<< HEAD
 
                 string[,] bluePrint = new string[3, 3];
-
-                string[,] bluePrint = new string[3,3];
-
-=======
-                string[,] bluePrint = new string[3, 3];
-
-                string[,] bluePrint = new string[3,3];
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
 
                 bluePrint[0, 0] = database.BluePrints[i].x1y1;
                 bluePrint[1, 0] = database.BluePrints[i].x2y1;
@@ -146,11 +82,6 @@ namespace Assets.Scripts.UI.Crafting
 
                 int points = 0;
 
-<<<<<<< HEAD
-=======
-                
-
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
                 for (int y = 0; y < 3; y++)
                 {
                     for (int x = 0; x < 3; x++)
@@ -174,15 +105,8 @@ namespace Assets.Scripts.UI.Crafting
             }
         }
     }
-<<<<<<< HEAD
 
 }
 
 
 
-=======
-}
-
-}
-
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b

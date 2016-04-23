@@ -16,7 +16,6 @@ namespace Assets.Scripts.UI.Crafting
         {
             cm = transform.parent.parent.GetComponent<CraftingManager>();
         }
-
         public void OnDrop(PointerEventData eventData)
         {
             try
@@ -25,26 +24,20 @@ namespace Assets.Scripts.UI.Crafting
                 {
                     ItemData droppedItemData = eventData.pointerDrag.GetComponent<ItemData>();
                     droppedItemData.transform.SetParent(transform);
-                    droppedItemData.GetComponent<RectTransform>().anchoredPosition3D = droppedItemData.startPosition;
+
                     droppedItemData.startParent = transform;
                     droppedItemData.inv.ItemList.Remove(droppedItemData);
                     data = droppedItemData;
-
+                    droppedItemData.GetComponent<RectTransform>().anchoredPosition = droppedItemData.startPosition;
                     cm.Call();
                 }
             }
             catch (Exception ex)
             {
 
-<<<<<<< HEAD
-            }                  cm.Call();      
+            }                      
                 
         }
-=======
-            }
-                    cm.Call();      
-                }
->>>>>>> 74e0639fcb400fcaa09d3bceb35a56f025ad646b
         }
     }
 
