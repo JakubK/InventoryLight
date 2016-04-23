@@ -37,6 +37,7 @@ namespace Assets.Scripts.UI
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+<<<<<<< HEAD
             if (inv != null)
             {
                 if (inv.DragAndDropEnabled)
@@ -50,12 +51,25 @@ namespace Assets.Scripts.UI
 
                         GetComponent<CanvasGroup>().blocksRaycasts = false;
                     }
+=======
+            if (inv.DragAndDropEnabled)
+            {
+                if (HoldedItem != null)
+                {
+                    startPosition = transform.GetComponent<RectTransform>().anchoredPosition3D;
+                    startParent = transform.parent;
+                    this.transform.SetParent(transform.parent.parent);
+                    this.transform.position = eventData.position;
+
+                    GetComponent<CanvasGroup>().blocksRaycasts = false;
+>>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
                 }
             }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
+<<<<<<< HEAD
             if (inv != null)
             {
                 if (inv.DragAndDropEnabled)
@@ -64,12 +78,20 @@ namespace Assets.Scripts.UI
                     {
                         this.transform.position = eventData.position;
                     }
+=======
+            if (inv.DragAndDropEnabled)
+            {
+                if (HoldedItem != null)
+                {
+                    this.transform.position = eventData.position;
+>>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
                 }
             }
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
+<<<<<<< HEAD
             if (inv != null)
             {
                 if (inv.DragAndDropEnabled)
@@ -91,11 +113,32 @@ namespace Assets.Scripts.UI
                         transform.GetComponent<RectTransform>().anchoredPosition3D = startPosition;
                     }
                 }
+=======
+            if (inv.DragAndDropEnabled)
+            {
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+                transform.GetComponent<RectTransform>().anchoredPosition3D = startPosition;
+
+                bool foundParent = false;
+                for (int i = 0; i < inv.SlotList.Count; i++)
+                {
+                    if (transform.parent == inv.SlotList[i])
+                    {
+                        foundParent = true;
+                    }
+                }
+                if (foundParent == false)
+                {
+                    transform.SetParent(startParent);
+                    transform.GetComponent<RectTransform>().anchoredPosition3D = startPosition;
+                }
+>>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
             }
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
+<<<<<<< HEAD
             if (inv != null)
             {
                 if (eventData.clickCount == inv.OnUseClickCount)
@@ -114,25 +157,51 @@ namespace Assets.Scripts.UI
                     {
                         Destroy(gameObject);
                     }
+=======
+            if (eventData.clickCount == inv.OnUseClickCount)
+            {
+                this.HoldedItem.Use();
+                this.Amount--;
+                if (Amount > 1)
+                {
+                    transform.GetChild(0).GetComponent<Text>().text = Amount.ToString();
+                }
+                else if (Amount == 1)
+                {
+                    transform.GetChild(0).GetComponent<Text>().text = "";
+                }
+                else
+                {
+                    Destroy(gameObject);
+>>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
                 }
             }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+<<<<<<< HEAD
             if (inv != null)
             {
                 inv.Tooltip.gameObject.SetActive(true);
                 inv.Tooltip.GetComponent<Tooltip>().Call(HoldedItem);
             }
+=======
+            inv.Tooltip.gameObject.SetActive(true);
+            inv.Tooltip.GetComponent<Tooltip>().Call(HoldedItem);
+>>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+<<<<<<< HEAD
             if (inv != null)
             {
                 inv.Tooltip.gameObject.SetActive(false);
             }
+=======
+            inv.Tooltip.gameObject.SetActive(false);
+>>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
         }
     }
  }

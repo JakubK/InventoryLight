@@ -209,6 +209,10 @@ namespace Assets.Scripts.UI
             {
                 itemInstance.transform.GetChild(0).GetComponent<Text>().text = Amount.ToString();
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
         }
 
         public void AddItem(int ID)
