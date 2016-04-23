@@ -37,7 +37,7 @@ namespace Assets.Scripts.UI
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-<<<<<<< HEAD
+ 
             if (inv != null)
             {
                 if (inv.DragAndDropEnabled)
@@ -51,7 +51,7 @@ namespace Assets.Scripts.UI
 
                         GetComponent<CanvasGroup>().blocksRaycasts = false;
                     }
-=======
+
             if (inv.DragAndDropEnabled)
             {
                 if (HoldedItem != null)
@@ -62,14 +62,14 @@ namespace Assets.Scripts.UI
                     this.transform.position = eventData.position;
 
                     GetComponent<CanvasGroup>().blocksRaycasts = false;
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
+
                 }
             }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-<<<<<<< HEAD
+ 
             if (inv != null)
             {
                 if (inv.DragAndDropEnabled)
@@ -78,20 +78,19 @@ namespace Assets.Scripts.UI
                     {
                         this.transform.position = eventData.position;
                     }
-=======
+
             if (inv.DragAndDropEnabled)
             {
                 if (HoldedItem != null)
                 {
                     this.transform.position = eventData.position;
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
                 }
             }
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-<<<<<<< HEAD
+ 
             if (inv != null)
             {
                 if (inv.DragAndDropEnabled)
@@ -113,7 +112,7 @@ namespace Assets.Scripts.UI
                         transform.GetComponent<RectTransform>().anchoredPosition3D = startPosition;
                     }
                 }
-=======
+
             if (inv.DragAndDropEnabled)
             {
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -132,13 +131,13 @@ namespace Assets.Scripts.UI
                     transform.SetParent(startParent);
                     transform.GetComponent<RectTransform>().anchoredPosition3D = startPosition;
                 }
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
+
             }
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-<<<<<<< HEAD
+ 
             if (inv != null)
             {
                 if (eventData.clickCount == inv.OnUseClickCount)
@@ -157,7 +156,7 @@ namespace Assets.Scripts.UI
                     {
                         Destroy(gameObject);
                     }
-=======
+
             if (eventData.clickCount == inv.OnUseClickCount)
             {
                 this.HoldedItem.Use();
@@ -173,35 +172,35 @@ namespace Assets.Scripts.UI
                 else
                 {
                     Destroy(gameObject);
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
+
                 }
             }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-<<<<<<< HEAD
+ 
             if (inv != null)
             {
                 inv.Tooltip.gameObject.SetActive(true);
                 inv.Tooltip.GetComponent<Tooltip>().Call(HoldedItem);
             }
-=======
+
             inv.Tooltip.gameObject.SetActive(true);
             inv.Tooltip.GetComponent<Tooltip>().Call(HoldedItem);
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
+
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-<<<<<<< HEAD
+ 
             if (inv != null)
             {
                 inv.Tooltip.gameObject.SetActive(false);
             }
-=======
+
             inv.Tooltip.gameObject.SetActive(false);
->>>>>>> 2421ca45ee6fdbb1692eacf0e3175bdf8542ea4f
+
         }
     }
  }
