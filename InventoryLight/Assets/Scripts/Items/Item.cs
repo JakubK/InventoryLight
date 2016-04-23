@@ -27,6 +27,7 @@ namespace Assets.Scripts.Items
 
         public Item()
         {
+            
         }
 
         public Item(string name,string description)
@@ -43,13 +44,21 @@ namespace Assets.Scripts.Items
         public delegate void ItemAction();
 
         public event ItemAction OnUse;
+        public event ItemAction OnGear;
 
         public void Use()
         {
             if (OnUse != null)
             {
-                Debug.Log("You have used the " + Name);
                 OnUse();
+            }
+        }
+
+        public void Gear()
+        {
+            if (OnUse != null)
+            {
+                OnGear();
             }
         }
     }
