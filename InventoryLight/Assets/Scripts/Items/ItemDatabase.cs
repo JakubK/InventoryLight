@@ -99,5 +99,19 @@ namespace Assets.Scripts.Items
             }
             return result;
         }
+
+        public Recipe RecipeByName(string Name)
+        {
+            Recipe result = null;
+            for (int i = 0; i < Recipes.Count; i++)
+            {
+                if (ItemByName(Name).ID == Recipes[i].OutputID)
+                {
+                    result = Recipes[i];
+                    break;
+                }
+            }
+            return result;
+        }
     }
 }
