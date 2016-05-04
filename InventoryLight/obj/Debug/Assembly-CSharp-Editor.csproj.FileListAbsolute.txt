@@ -105,3 +105,38 @@ I:\IL\InventoryLight\Temp\bin\Debug\UnityEditor.UI.xml
 I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.Networking.xml
 I:\IL\InventoryLight\Temp\bin\Debug\UnityEditor.Networking.xml
 I:\IL\InventoryLight\Temp\bin\Debug\UnityEditor.TreeEditor.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\obj\Debug\Assembly-CSharp-Editor.csprojResolveAssemblyReference.cache
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\obj\Debug\Assembly-CSharp-Editor.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\obj\Debug\Assembly-CSharp-Editor.pdb
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Assembly-CSharp-Editor.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Assembly-CSharp-Editor.pdb
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\nunit.framework.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.Advertisements.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.EditorTestsRunner.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.Graphs.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.Networking.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.TreeEditor.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.UI.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.Networking.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.UI.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Mono.Cecil.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Unity.SerializationLogic.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Unity.DataContract.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Unity.UNetWeaver.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Unity.CecilTools.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.Advertisements.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\nunit.framework.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.EditorTestsRunner.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.UI.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.UI.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.Networking.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.Networking.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.TreeEditor.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Assembly-CSharp.pdb

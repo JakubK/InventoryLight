@@ -29,6 +29,6 @@ public class RecipeButton : MonoBehaviour
 
     public void CallDisplayer()
     {
-        print(displayer.database.ItemByID(holdedRecipe.OutputID).Name);
+        displayer.Call(holdedRecipe);
     }
 }

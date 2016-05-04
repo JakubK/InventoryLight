@@ -15,7 +15,7 @@ public class ItemDatabaseWindow : EditorWindow
 
     private int toolbarIndex = 0;
     private int craftToolbarIndex = 0;
-    private string[] toolbarStrings = new[] { "Items", "Item Properties & Categories", "Crafting" };
+    private string[] toolbarStrings = new[] { "Items", "Item Properties & Categories", "Crafting","Currencies" };
     private string[] craftToolbarStrings = new[] {"Recipes", "BluePrints" };
     public string[] CategoryStrings;
     public string[] PropertyStrings;
@@ -419,50 +419,63 @@ public class ItemDatabaseWindow : EditorWindow
                         }
                     }
                     GUILayout.EndHorizontal();
+					try
+					{
                     foreach (Recipe rec in _database.Recipes)
-                    {
-                        if (GUILayout.Button(_database.ItemByID(rec.OutputID).Name.ToString()))
-                        {
-                            EditedRecipe = rec;
-                        }
-                    }
+	                    {
+	                        if (GUILayout.Button(_database.ItemByID(rec.OutputID).Name.ToString()))
+							{
+								EditedRecipe = rec;
+	                        }
+	                    }
+					}
+					catch(Exception ex) {
+
+					}
 
                     GUILayout.EndVertical();
                     if (EditedRecipe != null)
                     {
-                        GUILayout.BeginVertical("box");
+						try
+						{
+							GUILayout.BeginVertical("box");
+							GUILayout.BeginHorizontal();
+							GUILayout.Label("Result Item");
+							GUILayout.Label(_database.ItemByID(EditedRecipe.OutputID).Name.ToString());
+							GUILayout.EndHorizontal();
 
-                        GUILayout.BeginHorizontal();
-                        GUILayout.Label("Result Item");
-                        GUILayout.Label(_database.ItemByID(EditedRecipe.OutputID).Name.ToString());
-                        GUILayout.EndHorizontal();
+							GUILayout.Label("Ingredients");
 
-                        GUILayout.Label("Ingredients");
+							if (GUILayout.Button("New Ingredient"))
+							{
+								EditedRecipe.RequiredData.Add(_database.ItemByID(0));
+							}
+							if (EditedRecipe.RequiredData != null)
+							{
+								foreach (Item i in EditedRecipe.RequiredData)
+								{
+									GUILayout.Space(10);
+									GUILayout.BeginHorizontal();
+									if (GUILayout.Button("Remove"))
+									{
+										CraftDataToRemove = i;
+									}
+									GUILayout.Label("Ingredient ID");
+									int.TryParse(GUILayout.TextField(i.ID.ToString()), out i.ID);
 
-                        if (GUILayout.Button("New Ingredient"))
-                        {
-                            EditedRecipe.RequiredData.Add(_database.ItemByID(0));
-                        }
-                        if (EditedRecipe.RequiredData != null)
-                        {
-                            foreach (Item i in EditedRecipe.RequiredData)
-                            {
-                                GUILayout.Space(10);
-                                GUILayout.BeginHorizontal();
-                                if (GUILayout.Button("Remove"))
-                                {
-                                    CraftDataToRemove = i;
-                                }
-                                GUILayout.Label("Ingredient ID");
-                                int.TryParse(GUILayout.TextField(i.ID.ToString()), out i.ID);
+									GUILayout.EndHorizontal();
+								}
+							}
+						}
+						catch(Exception ex) {
 
-                                GUILayout.EndHorizontal();
-                            }
-                        }
+						}
+                        
 
                         GUILayout.EndVertical();
                     }
                     GUILayout.EndHorizontal();
+					
                 }
                 else if (craftToolbarIndex == 1) //BluePrints
                 {
@@ -534,6 +547,10 @@ public class ItemDatabaseWindow : EditorWindow
                     }
                     GUILayout.EndHorizontal();
                 }
+            }
+            else if (toolbarIndex == 3) //Currencies
+            {
+
             }
 
             _serializedObject.Update();

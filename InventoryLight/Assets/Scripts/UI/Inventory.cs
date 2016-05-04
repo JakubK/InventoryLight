@@ -5,6 +5,7 @@ using System.IO;
 using Assets.Scripts.Items;
 using Assets.Scripts.Serialization;
 using UnityEngine.UI;
+using Assets.Scripts.Crafting;
 
 namespace Assets.Scripts.UI
 {
@@ -90,6 +91,42 @@ namespace Assets.Scripts.UI
             }
         }
 
+		public bool canAffordRecipe(int ID)
+		{
+			bool result = false;
+
+			Recipe rec = ItemDatabase.RecipeByName (ItemDatabase.ItemByID (ID).Name);
+
+			Dictionary<int,int> IdsDictionary = new Dictionary<int, int> ();
+
+			foreach (Item i in rec.RequiredData)
+			{
+				if (!IdsDictionary.ContainsKey(i.ID))
+				{
+					int count = 0;
+					for (int j = 0; j < rec.RequiredData.Count; j++)
+					{
+						if (rec.RequiredData[j].ID == i.ID)
+						{
+							count++;
+						}
+					}
+					IdsDictionary.Add(i.ID, count);
+				}
+			}
+
+			foreach (var i in IdsDictionary) 
+			{
+				if (i.Value > GetItemCount (i.Key)) {
+					result = false;
+					break;
+				} else {
+					result = true;
+				}
+			}
+			return result;
+		}
+
         public void RestoreLastSession()
         {
             ItemCollectionSerializer ics = new ItemCollectionSerializer();
@@ -117,6 +154,18 @@ namespace Assets.Scripts.UI
                 SaveSession();
             }
         }
+
+		public int GetItemCount(int ID)
+		{
+			int result = 0;
+			foreach (var data in ItemList) {
+				if (data.HoldedItem.ID == ID) {
+					result += data.Amount;
+				}
+			}
+
+			return result;
+		}
 
         private void FillWithSlots()
         {

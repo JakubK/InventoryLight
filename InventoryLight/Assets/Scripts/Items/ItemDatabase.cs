@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Deployment.Internal;
 using Assets.Scripts.Crafting;
+using Assets.Scripts.Currencies;
 
 namespace Assets.Scripts.Items
 {
@@ -20,7 +21,10 @@ namespace Assets.Scripts.Items
         [HideInInspector]
         public List<Recipe> Recipes = new List<Recipe>();
 
+        [HideInInspector]
         public List<BluePrint> BluePrints = new List<BluePrint>();
+
+        public List<Currency> Currencies = new List<Currency>();
 
         public bool CategoryExist(string name)
         {

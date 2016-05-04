@@ -61,3 +61,24 @@ I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.xml
 I:\IL\InventoryLight\Temp\bin\Debug\UnityEditor.xml
 I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.UI.xml
 I:\IL\InventoryLight\Temp\bin\Debug\UnityEngine.Networking.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Assembly-CSharp.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Assembly-CSharp.pdb
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.Networking.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.UI.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Mono.Cecil.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Unity.SerializationLogic.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Unity.DataContract.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Unity.UNetWeaver.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Unity.CecilTools.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEditor.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.UI.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\Temp\bin\Debug\UnityEngine.Networking.xml
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\obj\Debug\Assembly-CSharp.dll
+F:\Projekty C#\Aktualne Projekty\InventoryLight\InventoryLight\obj\Debug\Assembly-CSharp.pdb
