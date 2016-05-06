@@ -6,6 +6,7 @@ using Assets.Scripts.Items;
 using UnityEditor;
 using UnityEditorInternal;
 using Assets.Scripts.Crafting;
+using Assets.Scripts.Currencies;
 
 public class ItemDatabaseWindow : EditorWindow
 {
@@ -36,17 +37,22 @@ public class ItemDatabaseWindow : EditorWindow
     protected BluePrint EditedBluePrint;
     protected BluePrint BluePrintToRemove;
 
+    protected Currency EditedCurrency;
+    protected Currency CurrencyToRemove;
+
     private GUIStyle ButtonStyle;
 
     private string newItemCategory = "";
     private string newItemProperty = "";
     private string newRecipe = "";
     private string newBluePrint = "";
+    private string newCurrency = "";
 
     protected ItemCategory selectedCategory;
     protected ItemProperty propertyToDelete;
 
     public ReorderableList ItemPropertyList;
+    public ReorderableList CurrencyDependencyList;
 
     public static void ShowWindow(ItemDatabase itemDatabase)
     {
@@ -516,7 +522,6 @@ public class ItemDatabaseWindow : EditorWindow
                     {
                         GUILayout.BeginVertical("box", GUILayout.Width(200));
                         GUILayout.BeginHorizontal();
-                      //  GUILayout.Label("BluePrint for: " + _database.ItemByID(EditedRecipe.OutputID).Name.ToString());
                         GUILayout.EndHorizontal();
 
                             GUILayout.BeginVertical();
@@ -550,7 +555,117 @@ public class ItemDatabaseWindow : EditorWindow
             }
             else if (toolbarIndex == 3) //Currencies
             {
+                GUILayout.BeginHorizontal();
+                GUILayout.BeginVertical("box", GUILayout.Width(this.position.width / 2));
 
+                GUILayout.BeginHorizontal();
+                newCurrency = GUILayout.TextField(newCurrency, GUILayout.Width(125));
+                GUILayout.Space(20);
+                if (GUILayout.Button("Create new currency", GUILayout.Width(200)))
+                {
+                    if(!string.IsNullOrEmpty(newCurrency))
+                    {
+                        if (!_database.CurrencyExist(newCurrency))
+                        {
+                            Currency currency = new Currency();
+                            currency.Name = newCurrency;
+
+                            _database.Currencies.Add(currency);
+                        }
+                    }
+                }
+                GUILayout.EndHorizontal();
+
+                foreach (var c in _database.Currencies)
+                {
+                    GUILayout.Space(10);
+
+                    if (GUILayout.Button(c.Name))
+                    {
+                        EditedCurrency = _database.CurrencyByName(c.Name);
+                        CurrencyDependencyList = new ReorderableList(EditedCurrency.Dependencies, typeof(CurrencyDependency));
+                        EditorGUI.FocusTextInControl(null);
+                    }
+                }
+                
+                GUILayout.EndVertical();
+
+                GUILayout.BeginVertical("box");
+
+                        if (EditedCurrency != null)
+                        {
+
+                        if (CurrencyDependencyList == null)
+                        {
+                            CurrencyDependencyList = new ReorderableList(EditedCurrency.Dependencies, typeof(CurrencyDependency));
+                        }
+
+                        if (CurrencyDependencyList != null || !CurrencyDependencyList.list.Equals(EditedCurrency.Dependencies))
+                        {
+                            if (EditedCurrency.Dependencies != null)
+                            {
+                                CurrencyDependencyList.elementHeight = EditorGUIUtility.singleLineHeight * 5f;
+
+                                CurrencyDependencyList.drawHeaderCallback = (Rect rect) =>
+                                   {
+                                       EditorGUI.LabelField(rect, "Currency Names and Currency Values");
+                                   };
+
+                                CurrencyDependencyList.onAddCallback = (ReorderableList l) =>
+                                    {
+                                        var index = EditedCurrency.Dependencies.Count;
+                                        CurrencyDependency dependency = new CurrencyDependency();
+                                        EditedCurrency.Dependencies.Add(dependency);
+
+                                        dependency = EditedCurrency.Dependencies[index];
+
+                                        dependency.FirstCurrency = EditedCurrency.Name;
+                                        dependency.SecondCurrency = EditedCurrency.Name;
+
+                                        dependency.FirstCurrencyCount = 1;
+                                        dependency.SecondCurrencyCount = 1;
+                                    };
+
+                                CurrencyDependencyList.drawElementCallback = (Rect rect, int index, bool active, bool focused) =>
+                                    {
+                                        try
+                                        {
+                                            CurrencyDependency dependency = EditedCurrency.Dependencies[index];
+                                            rect.y += 2;
+
+                                            dependency.FirstCurrency = EditorGUI.TextField(new Rect(rect.x, rect.y, 90, EditorGUIUtility.singleLineHeight), dependency.FirstCurrency);
+                                            dependency.SecondCurrency = EditorGUI.TextField(new Rect(rect.x, rect.y + 50, 90, EditorGUIUtility.singleLineHeight), dependency.SecondCurrency);
+
+                                            int.TryParse(EditorGUI.TextField(new Rect(rect.x + 100, rect.y, 90, EditorGUIUtility.singleLineHeight), dependency.FirstCurrencyCount.ToString()), out dependency.FirstCurrencyCount);
+                                            int.TryParse(EditorGUI.TextField(new Rect(rect.x + 100, rect.y + 50, 90, EditorGUIUtility.singleLineHeight), dependency.SecondCurrencyCount.ToString()), out dependency.SecondCurrencyCount);
+                                        }
+                                        catch (Exception ex)
+                                        {
+
+                                        }
+
+                                    };
+                            }
+                        }
+                        GUILayout.BeginHorizontal();
+                        if (GUILayout.Button("Remove"))
+                        {
+                            CurrencyToRemove = EditedCurrency;
+                        }
+                        GUILayout.Label("Currency Name:");
+                        EditedCurrency.Name = GUILayout.TextField(EditedCurrency.Name, GUILayout.Width(125));
+                        GUILayout.EndHorizontal();
+
+                     
+
+                        EditorUtility.SetDirty(_database);
+                        CurrencyDependencyList.DoLayoutList();
+                        EditorUtility.SetDirty(_database);              
+                }
+
+                GUILayout.EndVertical();
+
+                GUILayout.EndHorizontal();
             }
 
             _serializedObject.Update();
@@ -560,6 +675,12 @@ public class ItemDatabaseWindow : EditorWindow
         {
             _database.BluePrints.Remove(BluePrintToRemove);
             BluePrintToRemove = null;
+        }
+        if (CurrencyToRemove != null)
+        {
+            _database.Currencies.Remove(CurrencyToRemove);
+            CurrencyToRemove = null;
+            EditedCurrency = null;
         }
         if (CraftDataToRemove != null)
         {

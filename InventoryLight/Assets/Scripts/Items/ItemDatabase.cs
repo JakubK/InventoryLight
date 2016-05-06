@@ -26,6 +26,34 @@ namespace Assets.Scripts.Items
 
         public List<Currency> Currencies = new List<Currency>();
 
+        public Currency CurrencyByName(string name)
+        {
+            Currency c = null;
+            for (int i = 0; i < Currencies.Count; i++)
+            {
+                if (Currencies[i].Name == name)
+                {
+                    c = Currencies[i];
+                    break;
+                }
+            }
+            return c;
+        }
+
+        public bool CurrencyExist(string name)
+        {
+            bool result = false;
+            for (int i = 0; i < Currencies.Count; i++)
+            {
+                if (Currencies[i].Name == name)
+                {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        }
+
         public bool CategoryExist(string name)
         {
             bool result = false;

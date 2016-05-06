@@ -37,12 +37,16 @@ namespace Assets.Scripts.UI
 
         public int OnUseClickCount;
 
+        CurrencyWallet wallet;
+
         void Start()
         {
             SlotList = new List<Transform>();
             ItemList = new List<ItemData>();
             FillWithSlots();
             RestoreLastSession();
+
+            wallet = GetComponent<CurrencyWallet>();
         }
 
         void OnApplicationQuit()
@@ -57,15 +61,15 @@ namespace Assets.Scripts.UI
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                AddItem(0);
+                wallet.AddCurency(ItemDatabase.CurrencyByName("Cents"), 10);
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
-                RemoveItem(0);
+                wallet.RemoveCurrency(ItemDatabase.CurrencyByName("Cents"), 10);  
             }
             else if (Input.GetKeyDown(KeyCode.O))
             {
-                AddItem(1);
+                print(wallet.ByNameCurrencyData("Cents").Amount.ToString() + " cents " + wallet.ByNameCurrencyData("Dollars").Amount.ToString() + " dollars.");
             }
             else if (Input.GetKeyDown(KeyCode.L))
             {

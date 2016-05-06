@@ -10,5 +10,11 @@ namespace Assets.Scripts.Currencies
     {
         public string Name;
         public List<CurrencyDependency> Dependencies;
+
+        public Currency()
+        {
+            Name = string.Empty;
+            Dependencies = new List<CurrencyDependency>();
+        }
     }
 }
