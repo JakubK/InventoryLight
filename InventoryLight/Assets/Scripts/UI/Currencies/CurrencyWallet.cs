@@ -17,8 +17,10 @@ public class CurrencyWallet : MonoBehaviour
     {
         CurrenciesData = new List<CurrencyData>();
 
-        CurrenciesData.Add(new CurrencyData("Cents", 0));
-        CurrenciesData.Add(new CurrencyData("Dollars", 0));
+        CurrenciesData.Add(new CurrencyData("Copper", 0));
+        CurrenciesData.Add(new CurrencyData("Silver", 0));
+        CurrenciesData.Add(new CurrencyData("Gold", 0));
+
     }
 
     public void RemoveCurrency(Currency currency,int count)

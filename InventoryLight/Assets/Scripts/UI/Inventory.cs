@@ -61,15 +61,15 @@ namespace Assets.Scripts.UI
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                wallet.AddCurency(ItemDatabase.CurrencyByName("Cents"), 10);
+                wallet.AddCurency(ItemDatabase.CurrencyByName("Copper"), 10);
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
-                wallet.RemoveCurrency(ItemDatabase.CurrencyByName("Cents"), 10);  
+                wallet.RemoveCurrency(ItemDatabase.CurrencyByName("Copper"), 10);  
             }
             else if (Input.GetKeyDown(KeyCode.O))
             {
-                print(wallet.ByNameCurrencyData("Cents").Amount.ToString() + " cents " + wallet.ByNameCurrencyData("Dollars").Amount.ToString() + " dollars.");
+                print(wallet.ByNameCurrencyData("Gold").Amount.ToString() + " gold " + wallet.ByNameCurrencyData("Silver").Amount.ToString() + " silver" + wallet.ByNameCurrencyData("Copper").Amount.ToString() + " copper");
             }
             else if (Input.GetKeyDown(KeyCode.L))
             {
