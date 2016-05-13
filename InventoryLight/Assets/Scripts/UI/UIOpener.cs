@@ -8,6 +8,11 @@ namespace Assets.Scripts.UI
         public GameObject Target;
         bool enabled = false;
 
+        void Start()
+        {
+            Target.SetActive(enabled);
+        }
+
         void Update()
         {
             if (Input.GetKeyDown(KeyToReopen))

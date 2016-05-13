@@ -85,71 +85,61 @@ public class CurrencyWallet : MonoBehaviour
     {
         var cur = CurrenciesData.Find(x => x.Name == currency.Name);
 
-        if (addition)
+        int result = 0;
+        foreach (CurrencyDependency dependency in currency.Dependencies)
         {
-            if (cur != null)
+            if (cur.Amount >= dependency.FirstCurrencyCount)
             {
-                bool isOk = true;
-                for (int i = 0; i < currency.Dependencies.Count; i++)
+                result = 1;
+
+                RemoveCurrency(database.CurrencyByName(cur.Name), dependency.FirstCurrencyCount);
+                var secondCur = CurrenciesData.Find(x => x.Name == dependency.SecondCurrency);
+                AddCurency(database.CurrencyByName(secondCur.Name), dependency.SecondCurrencyCount);
+                break;
+            }
+            else if (cur.Amount < 0)
+            {
+                result = -1;
+
+                Currency targetCurrency = null;
+                CurrencyDependency targetDependency = null;
+
+                foreach (Currency cu in database.Currencies)
                 {
-                    if (cur.Amount >= currency.Dependencies[i].FirstCurrencyCount)
+                    foreach (CurrencyDependency dep in cu.Dependencies)
                     {
-                        isOk = false;
-                        var secondCur = CurrenciesData.Find(x => x.Name == currency.Dependencies[i].SecondCurrency);
-
-                        cur.Amount -= currency.Dependencies[i].FirstCurrencyCount;
-
-                        secondCur.Amount += currency.Dependencies[i].SecondCurrencyCount;
+                        if (dep.SecondCurrency == currency.Name && dep.SecondCurrencyCount == 1)
+                        {
+                            targetCurrency = cu; //niższa waluta
+                            targetDependency = dep;
+                            goto Rest;
+                        }
                     }
                 }
+            Rest:
 
-                if (isOk == false)
+                if (targetCurrency != null)
                 {
-                    AdjustCurrency(currency);
+                    var secondCur = CurrenciesData.Find(x => x.Name == targetCurrency.Name); //niższa waluta
+                    int delta = cur.Amount - secondCur.Amount;
+
+                    int RemoveCoins = Mathf.Abs(delta) * targetDependency.FirstCurrencyCount;
+
+                    RemoveCurrency(database.CurrencyByName(secondCur.Name), RemoveCoins);
                 }
+
+
+                break;
             }
         }
-        else
+
+        if (result == -1)
         {
-            if (cur != null)
-            {
-                    bool result = false;
-                    CurrencyDependency targetDependency = null;
-                    Currency targetCurrency = null;
-
-                    if (cur.Amount < 0)
-                    {
-                        foreach (var i in database.Currencies)
-                        {
-                            foreach (var d in i.Dependencies)
-                            {
-                                if (d.SecondCurrency == "Copper" && d.SecondCurrencyCount == 1)
-                                {
-                                    result = true;
-                                    targetDependency = d;
-                                    targetCurrency = i;
-                                    break;
-                                }
-                            }
-                            if (result == true)
-                            {
-                                break;
-                            }
-                        }
-
-                        if (targetDependency != null)
-                        {
-                           var delta = CurrenciesData.Find(x => x.Name == currency.Name).Amount;
-                           AddCurency(targetCurrency,Mathf.Abs(delta));
-                           AdjustCurrency(currency, true);
-                           AdjustCurrency(currency, false);
-
-                           AdjustCurrency(targetCurrency, true);
-                           AdjustCurrency(targetCurrency, false);
-
-                        }
-                    }
-            }
+            AdjustCurrency(currency, false);
+        }
+        else if (result == 1)
+        {
+            AdjustCurrency(currency, true);
         }
     }
 }
