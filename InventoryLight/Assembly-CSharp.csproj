@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Items\ItemProperty.cs" />
      <Compile Include="Assets\Scripts\Serialization\ItemCollectionSerializer.cs" />
      <Compile Include="Assets\Scripts\Serialization\ItemDataParams.cs" />
+     <Compile Include="Assets\Scripts\Trading\WareData.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftButton.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\CraftingManager.cs" />
      <Compile Include="Assets\Scripts\UI\Crafting\InputSlot.cs" />
@@ -70,6 +71,7 @@
      <Compile Include="Assets\Scripts\UI\ItemData.cs" />
      <Compile Include="Assets\Scripts\UI\Slot.cs" />
      <Compile Include="Assets\Scripts\UI\Tooltip.cs" />
+     <Compile Include="Assets\Scripts\UI\Trading\UITrader.cs" />
      <Compile Include="Assets\Scripts\UI\UIOpener.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity3d/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

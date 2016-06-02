@@ -22,7 +22,7 @@ public class GameCam : MonoBehaviour
     }
 
     /// <summary>
-    /// Oś po której kamera będzie się przybliżać
+    /// Oś po której kamera będzie asdasię przybliżać
     /// (na ogół jest to równoległa oś do osi Scrolla)
     /// </summary>
     public TargetAxis ZoomAxis;

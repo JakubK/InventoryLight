@@ -4,6 +4,7 @@ using Assets.Scripts.Currencies;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using Assets.Scripts.Items;
+using UnityEngine.UI;
 
 public class CurrencyWallet : MonoBehaviour 
 {
@@ -13,14 +14,38 @@ public class CurrencyWallet : MonoBehaviour
 
     public bool AutoConvertable = true;
 
+    [SerializeField]
+    Transform WalletDisplayerTransform;
+
+    Text WalletDisplayer;
+
     void Start()
     {
         CurrenciesData = new List<CurrencyData>();
+        WalletDisplayer = WalletDisplayerTransform.GetComponent<Text>();
+        //CurrenciesData.Add(new CurrencyData("Copper", 0));
+        //CurrenciesData.Add(new CurrencyData("Silver", 0));
+        //CurrenciesData.Add(new CurrencyData("Gold", 0));
+        foreach (var i in database.Currencies)
+        {
+            CurrenciesData.Add(new CurrencyData(i.Name, 0));
+        }
+    }
 
-        CurrenciesData.Add(new CurrencyData("Copper", 0));
-        CurrenciesData.Add(new CurrencyData("Silver", 0));
-        CurrenciesData.Add(new CurrencyData("Gold", 0));
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            AddCurency(database.CurrencyByName("Copper"), 10);
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            RemoveCurrency(database.CurrencyByName("Copper"), 10);
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            print(ByNameCurrencyData("Gold").Amount.ToString() + " gold " + ByNameCurrencyData("Silver").Amount.ToString() + " silver" + ByNameCurrencyData("Copper").Amount.ToString() + " copper");
+        }
     }
 
     public void RemoveCurrency(Currency currency,int count)
@@ -97,40 +122,6 @@ public class CurrencyWallet : MonoBehaviour
                 AddCurency(database.CurrencyByName(secondCur.Name), dependency.SecondCurrencyCount);
                 break;
             }
-            else if (cur.Amount < 0)
-            {
-                result = -1;
-
-                Currency targetCurrency = null;
-                CurrencyDependency targetDependency = null;
-
-                foreach (Currency cu in database.Currencies)
-                {
-                    foreach (CurrencyDependency dep in cu.Dependencies)
-                    {
-                        if (dep.SecondCurrency == currency.Name && dep.SecondCurrencyCount == 1)
-                        {
-                            targetCurrency = cu; //niższa waluta
-                            targetDependency = dep;
-                            goto Rest;
-                        }
-                    }
-                }
-            Rest:
-
-                if (targetCurrency != null)
-                {
-                    var secondCur = CurrenciesData.Find(x => x.Name == targetCurrency.Name); //niższa waluta
-                    int delta = cur.Amount - secondCur.Amount;
-
-                    int RemoveCoins = Mathf.Abs(delta) * targetDependency.FirstCurrencyCount;
-
-                    RemoveCurrency(database.CurrencyByName(secondCur.Name), RemoveCoins);
-                }
-
-
-                break;
-            }
         }
 
         if (result == -1)
@@ -141,5 +132,7 @@ public class CurrencyWallet : MonoBehaviour
         {
             AdjustCurrency(currency, true);
         }
+
+        WalletDisplayer.text = "Gold: " + ByNameCurrencyData("Gold").Amount + " Silver: " + ByNameCurrencyData("Silver").Amount + " Copper: " + ByNameCurrencyData("Copper").Amount;
     }
 }

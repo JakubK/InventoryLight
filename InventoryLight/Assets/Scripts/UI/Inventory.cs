@@ -37,7 +37,6 @@ namespace Assets.Scripts.UI
 
         public int OnUseClickCount;
 
-        CurrencyWallet wallet;
 
         void Start()
         {
@@ -46,7 +45,6 @@ namespace Assets.Scripts.UI
             FillWithSlots();
             RestoreLastSession();
 
-            wallet = GetComponent<CurrencyWallet>();
         }
 
         void OnApplicationQuit()
@@ -61,17 +59,9 @@ namespace Assets.Scripts.UI
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                wallet.AddCurency(ItemDatabase.CurrencyByName("Copper"), 10);
+                AddItem(2);
             }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                wallet.RemoveCurrency(ItemDatabase.CurrencyByName("Copper"), 10);  
-            }
-            else if (Input.GetKeyDown(KeyCode.O))
-            {
-                print(wallet.ByNameCurrencyData("Gold").Amount.ToString() + " gold " + wallet.ByNameCurrencyData("Silver").Amount.ToString() + " silver" + wallet.ByNameCurrencyData("Copper").Amount.ToString() + " copper");
-            }
-            else if (Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKeyDown(KeyCode.L))
             {
                 ClearInventory();
             }
@@ -79,8 +69,15 @@ namespace Assets.Scripts.UI
 
         public void SaveSession()
         {
-            ItemCollectionSerializer ics = new ItemCollectionSerializer(ItemList);
-            ics.Save(ContainerPath);
+            try
+            {
+                ItemCollectionSerializer ics = new ItemCollectionSerializer(ItemList);
+                ics.Save(ContainerPath);
+            }
+            catch (Exception e)
+            {
+
+            }   
         }
 
         public void ClearInventory()

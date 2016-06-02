@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Editor\ItemDatabaseEditor.cs" />
      <Compile Include="Assets\Editor\ItemDatabaseWindow.cs" />
+     <Compile Include="Assets\Editor\TradeEditor.cs" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>D:/Unity3d/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

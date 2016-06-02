@@ -135,6 +135,7 @@ namespace Assets.Scripts.UI
         {
             try
             {
+                print("d");
                 inv.Tooltip.gameObject.SetActive(true);
                 inv.Tooltip.GetComponent<Tooltip>().Call(HoldedItem);
             }
