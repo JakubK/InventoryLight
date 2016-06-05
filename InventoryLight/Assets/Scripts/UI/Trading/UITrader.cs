@@ -13,11 +13,11 @@ public class UITrader : MonoBehaviour
 
     public ItemDatabase database;
     [SerializeField]
+    [HideInInspector]
     public List<WareData> Wares = new List<WareData>();
 
     void Start()
     {
-        Wares = new List<WareData>();
         GameObject instance = Instantiate(UIPrefab.gameObject);
         instance.transform.SetParent(transform);
         instance.GetComponent<RectTransform>().anchoredPosition3D = StartPosition;
@@ -25,6 +25,12 @@ public class UITrader : MonoBehaviour
 
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            foreach (var ware in Wares)
+            {
+                print(ware.WareID.ToString());
+            }
+        }
     }
 }
